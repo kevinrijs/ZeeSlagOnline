@@ -21,17 +21,17 @@
 
 		var canvas = document.getElementById('myCanvas');
 		var context = canvas.getContext('2d');
-		var startPositionsOfTilesX = {};
-		var startPositionsOfTilesY = {};
+		var startPositionsOfTilesX = [];
+		var startPositionsOfTilesY = [];
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
-		canvas.onclick = onClick;
+		
 		
 		
 		
 
-		function onClick(tableColumns, tableRows) {alert('you clicked on the Canvas');
+		function onClick(evt) {
 			var mousePosition =getMousePos(canvas, evt);
 			
 			
@@ -47,7 +47,7 @@
 				}
 			
 			}
-			
+			canvas.onclick = onClick;
 		
 
 		
@@ -64,10 +64,7 @@
       canvas.addEventListener('mousemove', function(evt) {
         var mousePos = getMousePos(canvas, evt);
         var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-       
-        
-        
-        
+    
       }, false);
 		
 		
