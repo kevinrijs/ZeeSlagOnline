@@ -28,7 +28,7 @@ public class ZeeSlagController {
 	
 	
 	@RequestMapping(value="/startGame", method=RequestMethod.POST)
-	public String startGame(Model model, HttpSession session, String name, int dimensionX, int dimensionY, int boats) {
+	public String startGame(Model model, HttpSession session, String name, String opponent, int dimensionX, int dimensionY, int boats) {
 		System.out.println("hhf");
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
 		session.setAttribute("player", player1);
@@ -37,8 +37,13 @@ public class ZeeSlagController {
 		model.addAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
 		
+		if(opponent.equals("computer")){
+			return "placeBoats";
+		}
 		
-		return "placeBoats";
+		
+		return "placeBoats"; //else return to multiplayer page.
+		
 	}
 	
 	

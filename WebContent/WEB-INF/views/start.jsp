@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
@@ -13,16 +13,16 @@
 		<p>
 		<table>
 		<tr>
-		<td>Player Name:</td><td><input type="text" name="name" value="${name}"></td>
+		<td>Player Name:</td><td><input type="text" name="name" value="${name}" required></td>
 		</tr>
 		<tr>
 		<td>Opponent</td><td><input type="radio" name="opponent" value="player">Human<input type="radio" name="opponent" value="computer" checked>Computer</td>
 		</tr>
 		<tr>
-		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10">Y<input type="number" name="dimensionY" min="1" max="10" value="10"></td>
+		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10" required>Y<input type="number" name="dimensionY" min="1" max="10" value="10" required></td>
 		</tr>
 		<tr>
-		<td>Number of Boats</td><td><input type="number" name="boats" min="1" max="5" value="5"></td>
+		<td>Number of Boats</td><td><input type="number" name="boats" min="1" max="5" value="5" required></td>
 		</tr>
 		<tr>
 		<td></td><td><input type="submit" value="Start game"></td>
