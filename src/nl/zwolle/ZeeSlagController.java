@@ -1,4 +1,6 @@
 package nl.zwolle;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,7 @@ public class ZeeSlagController {
 	
 	
 	@RequestMapping("/")
-	public String overzicht(Model model) {
+	public String beginGame(Model model, HttpSession session) {
 		model.addAttribute("hoi", "hoi");
 		return "start";
 	}
