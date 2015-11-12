@@ -2,7 +2,16 @@ package nl.zwolle.gameClasses;
 
 import java.util.ArrayList;
 
+//@Entity
 public class Speler {
+
+	public int getHoeveelheidBoten() {
+		return hoeveelheidBoten;
+	}
+
+	public void setHoeveelheidBoten(int hoeveelheidBoten) {
+		this.hoeveelheidBoten = hoeveelheidBoten;
+	}
 
 	protected String naam;
 	protected Bord bord;
@@ -41,7 +50,8 @@ public class Speler {
 	public void setNaam(String naam) {
 		this.naam = naam;
 	}
-
+	
+	//@OneToOne
 	public Bord getBord() {
 		return bord;
 	}

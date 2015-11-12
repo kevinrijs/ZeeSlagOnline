@@ -19,7 +19,7 @@ Waiting for a Human opponent to kick your ass...
 <td>Number of Boats</td>
 </tr>
 <tr>
-<td>${player1.naam}</td>
+<td>${name}</td>
 <td>${dimensionX} x ${dimensionY}</td>
 <td>${numberOfBoats}</td>
 </tr>
