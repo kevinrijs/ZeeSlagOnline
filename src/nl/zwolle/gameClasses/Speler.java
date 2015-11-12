@@ -2,7 +2,9 @@ package nl.zwolle.gameClasses;
 
 import java.util.ArrayList;
 
-//@Entity
+import javax.persistence.Entity;
+
+@Entity
 public class Speler {
 
 	public int getHoeveelheidBoten() {
@@ -51,7 +53,7 @@ public class Speler {
 		this.naam = naam;
 	}
 	
-	//@OneToOne
+	
 	public Bord getBord() {
 		return bord;
 	}

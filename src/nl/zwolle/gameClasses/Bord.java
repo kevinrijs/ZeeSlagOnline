@@ -1,5 +1,8 @@
 package nl.zwolle.gameClasses;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Bord {
 
 	// bord instance variabelen
