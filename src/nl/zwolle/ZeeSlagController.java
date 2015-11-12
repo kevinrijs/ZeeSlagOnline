@@ -36,7 +36,7 @@ public class ZeeSlagController {
 		
 		session.setAttribute("player1", player1);
 		
-		
+		model.addAttribute("player1", player1);
 		model.addAttribute("dimensionX", dimensionX);
 		model.addAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
@@ -50,7 +50,8 @@ public class ZeeSlagController {
 		}
 		
 		
-		return "placeBoats"; //else return to multiplayer waitingroom page.
+		return "waitingRoom"; //else return to multiplayer waitingroom page.
+		
 		
 	}
 	
