@@ -9,7 +9,8 @@
 <body>
 	<h1>Battleship Online</h1>
 	<h2>Place the boats</h2>
-	<canvas id="myCanvas" width="${dimensionX*1000}" height="${dimensionY*1000}"></canvas>
+	<canvas id="myCanvas" width="${dimensionX*1000}"
+		height="${dimensionY*1000}"></canvas>
 
 
 
@@ -17,28 +18,79 @@
 	<script>
 		var tableColumns = ${dimensionX};
 		var tableRows = ${dimensionY};
-		
 
 		var canvas = document.getElementById('myCanvas');
 		var context = canvas.getContext('2d');
-		
-					
+		var startPositionsOfTilesX = {};
+		var startPositionsOfTilesY = {};
 
-		drawField(context,tableColumns,tableRows);
+		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
-		function drawField( context, tableColums, tableRows) {
-		var tileWidth = 100;
-		var tileHeight = 100;
+		canvas.onclick = onClick;
+		
+		
+		
+
+		function onClick(tableColumns, tableRows) {alert('you clicked on the Canvas');
+			var mousePosition =getMousePos(canvas, evt);
+			
+			
+				for (index = 0; index < startPositionsOfTilesX.length; ++index) {
+				if((startPositionsOfTilesX[index]/100)>mousePosition.x ){
+					for(var j=0; j<startPositionsOfTilesY.length;j++){
+					if((startPositionsOfTilesY[index]/100)>mousePosition.y ){
+					alert('You clicked on tile: ' )
+					}
+					}
+				
+				}
+				}
+			
+			}
+			
+		
+
+		
+      
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+      
+
+      canvas.addEventListener('mousemove', function(evt) {
+        var mousePos = getMousePos(canvas, evt);
+        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+       
+        
+        
+        
+      }, false);
+		
+		
+		
+
+		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+			var tileWidth = 100;
+			var tileHeight = 100;
 
 			for (var i = 0; i < tableColumns; i++) {
 				for (var j = 0; j < tableRows; j++) {
+
+					var newX =(i * 100);
+					var newY=( j * 100);
 					context.beginPath();
-					context.rect(i * 100, j * 100, tileWidth, tileHeight);
-					
-					
+					context.rect(newX ,newY, tileWidth, tileHeight);				
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
 					context.stroke();
+					
+					startPositionsOfTilesX.push(newX);
+					startPositionsOfTilesY.push(newY);
+					
 				}
 			}
 		}
