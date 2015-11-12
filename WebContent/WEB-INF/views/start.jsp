@@ -9,21 +9,20 @@
 <title>ZeeSlag Online</title>
 </head>
 <body>
-${hoi}
-<form:form method="post" action="/startGame">
+<form:form method="post" action="startGame" >
 		<p>
 		<table>
 		<tr>
-		<td>Player Name:</td><td><input type="text" name="name1"></td>
+		<td>Player Name:</td><td><input type="text" name="name" value="${name}"></td>
 		</tr>
 		<tr>
 		<td>Opponent</td><td><input type="radio" name="opponent" value="player">Human<input type="radio" name="opponent" value="computer" checked>Computer</td>
 		</tr>
 		<tr>
-		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10">Y<input type="number" name="dimensionX" min="1" max="10"></td>
+		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10">Y<input type="number" name="dimensionY" min="1" max="10" value="10"></td>
 		</tr>
 		<tr>
-		<td>Number of Boats</td><td><input type="number" name="dimensionX" min="1" max="5"></td>
+		<td>Number of Boats</td><td><input type="number" name="boats" min="1" max="5" value="5"></td>
 		</tr>
 		<tr>
 		<td></td><td><input type="submit" value="Start game"></td>
