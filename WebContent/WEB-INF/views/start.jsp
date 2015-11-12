@@ -19,13 +19,14 @@
 		<td>Opponent</td><td><input type="radio" name="opponent" value="player">Human<input type="radio" name="opponent" value="computer" checked>Computer</td>
 		</tr>
 		<tr>
-		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10" required>Y<input type="number" name="dimensionY" min="1" max="10" value="10" required></td>
+		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10" size="2" required>
+										Y<input type="number" name="dimensionY" min="1" max="10" value="10" size="2" required></td>
 		</tr>
 		<tr>
-		<td>Number of Boats</td><td><input type="number" name="boats" min="1" max="5" value="5" required></td>
+		<td>Number of Boats</td><td><input type="number" name="boats" min="1" max="5" value="5" size="1" required></td>
 		</tr>
 		<tr>
-		<td></td><td><input type="submit" value="Start game"></td>
+		<td></td><td><input type="submit" value="Start game" ></td>
 		</tr>
 		</table>
 			
