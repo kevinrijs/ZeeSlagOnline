@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.persistence.Entity;
 
-@Entity
+
 public class Speler {
 
 	public int getHoeveelheidBoten() {

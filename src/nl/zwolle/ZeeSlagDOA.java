@@ -16,9 +16,7 @@ public class ZeeSlagDOA {
 	
 	
 	public static Apples create(){
-
 	
-
 	Apples apple = new Apples();
 	
 	apple.setNaam("Sjaak");

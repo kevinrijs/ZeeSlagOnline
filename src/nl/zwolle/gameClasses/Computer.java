@@ -2,7 +2,7 @@ package nl.zwolle.gameClasses;
 
 import javax.persistence.Entity;
 
-@Entity
+
 public class Computer extends Speler {
 
 	boolean shotSucceeded = false;
