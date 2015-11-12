@@ -1,4 +1,5 @@
 package nl.zwolle;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,14 @@ public class ZeeSlagController {
 	public String startGame(Model model, HttpSession session, String name, String opponent, int dimensionX, int dimensionY, int boats) {
 		
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
+		player1.setHoeveelheidBoten(boats);
+		
 		
 		
 		session.setAttribute("player1", player1);
-		
-		
+		model.addAttribute("player1", player1);
+
+		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
 		model.addAttribute("dimensionX", dimensionX);
 		model.addAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
@@ -50,8 +54,24 @@ public class ZeeSlagController {
 		}
 		
 		
-		return "placeBoats"; //else return to multiplayer waitingroom page.
+		return "waitingRoom"; //else return to multiplayer waitingroom page.
 		
+		
+	}
+	
+	@RequestMapping("/waitingRoom")
+	public String checkForSecondPlayer(Model model, HttpSession session) {
+		
+		//kijk of er 2 active spelers in de database zitten
+		//dan naar placeBoats
+		
+		//anders, als jij de enige active speler beent:
+		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
+		model.addAttribute("dimensionX", ((Speler)session.getAttribute("player1")).getBord().getBordBreedte());
+		model.addAttribute("dimensionY", ((Speler)session.getAttribute("player1")).getBord().getBordLengte());
+		model.addAttribute("numberOfBoats", ((Speler)session.getAttribute("player1")).getHoeveelheidBoten());
+		
+		return "waitingRoom";
 	}
 	
 	

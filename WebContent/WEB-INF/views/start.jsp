@@ -10,7 +10,7 @@
 </head>
 <body>
 <form:form method="post" action="startGame" >
-		<p>
+		
 		<table>
 		<tr>
 		<td>Player Name:</td><td><input type="text" name="name" value="${name}" required></td>
@@ -32,7 +32,7 @@
 			
 			
 			
-		</p>
+		
 	</form:form>
 </body>
 </html>
