@@ -1,4 +1,5 @@
 package nl.zwolle;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -34,12 +35,11 @@ public class ZeeSlagController {
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
 		player1.setHoeveelheidBoten(boats);
 		
+		
+		
 		session.setAttribute("player1", player1);
-		
 		model.addAttribute("player1", player1);
-		
-		
-		
+
 		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
 		model.addAttribute("dimensionX", dimensionX);
 		model.addAttribute("dimensionY", dimensionY);
@@ -63,7 +63,7 @@ public class ZeeSlagController {
 	public String checkForSecondPlayer(Model model, HttpSession session) {
 		
 		//kijk of er 2 active spelers in de database zitten
-		//dan naar twoPlayerGame
+		//dan naar placeBoats
 		
 		//anders, als jij de enige active speler beent:
 		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
