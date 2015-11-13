@@ -41,7 +41,7 @@ public class ZeeSlagController {
 		player1.setHoeveelheidBoten(boats);
 			
 		//database test
-		//ZeeSlagDOA.saveSpeler(player1);
+		
 		
 		
 		session.setAttribute("player1", player1);
@@ -59,6 +59,8 @@ public class ZeeSlagController {
 			
 			return "placeBoats";
 		}
+		ZeeSlagDOA.saveSpeler(player1);
+		
 		
 		
 		return "waitingRoom"; //else return to multiplayer waitingroom page.
@@ -84,6 +86,10 @@ public class ZeeSlagController {
 	public String checkForSecondPlayer(Model model, HttpSession session) {
 		
 		//kijk of er 2 active spelers in de database zitten
+		
+		
+		//session.getAttribute("player1");
+		
 		//dan naar placeBoats
 		
 		//anders, als jij de enige active speler beent:

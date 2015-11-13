@@ -18,33 +18,33 @@ public class ZeeSlagDOA {
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("apples");
 
 
-	public static Apples create(){
+	//	public static Apples create(){
+	//
+	//		Apples apple = new Apples();
+	//
+	//		apple.setNaam("Sjaak");
+	//		apple.setJaar(2000);
+	//
+	//
+	//
+	//		EntityManager em = emf.createEntityManager();
+	//		EntityTransaction t = em.getTransaction();
+	//		t.begin();
+	//		em.persist( apple );
+	//		t.commit();
+	//		em.close();
+	//
+	//		return apple;
+	//	}
 
-		Apples apple = new Apples();
 
-		apple.setNaam("Sjaak");
-		apple.setJaar(2000);
-
-
-
+	public static void remove(int id){
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		em.persist( apple );
-		t.commit();
-		em.close();
-
-		return apple;
-	}
-
-
-	public static void remove(Long id){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		Apples apple = em.find(Apples.class, id);
-		if(apple != null){
-			em.remove( apple );
+		Speler speler = em.find(Speler.class, id);
+		if(speler != null){
+			em.remove( speler );
 		}
 		t.commit();
 		em.close();
@@ -53,42 +53,42 @@ public class ZeeSlagDOA {
 	/**
 	 * Haal een rit op a.d.h.v. zijn id
 	 */
-	public static Apples find(Long id){
+	public static Speler find(int id){
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		Apples apple = em.find(Apples.class, id);
+		Speler speler = em.find(Speler.class, id);
 		t.commit();
 		em.close();
-		return apple;
+		return speler;
 	}
 
 	/**
 	 * Haal alle ritten op uit de database
 	 */
-	public static List<Apples> all(){
+	public static List<Speler> all(){
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		List<Apples> ritten = em.createQuery("from Apples", Apples.class).getResultList();
+		List<Speler> spelers = em.createQuery("from Speler", Speler.class).getResultList();
 		t.commit();
 		em.close();
-		return ritten;
+		return spelers;
 	}
 
-		public static Speler saveSpeler(Speler player){
-			System.out.println("hjhkkj");			
-			EntityManager em = emf.createEntityManager();
-			EntityTransaction t = em.getTransaction();
-			t.begin();
-			em.persist( player );
-			t.commit();
-			em.close();
-			
-			return player;
-		}
+	public static Speler saveSpeler(Speler player){
+				
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		em.persist( player );
+		t.commit();
+		em.close();
+
+		return player;
+	}
 
 
-		
+
 
 }
