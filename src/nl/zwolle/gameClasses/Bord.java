@@ -1,13 +1,41 @@
 package nl.zwolle.gameClasses;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
 public class Bord {
+	
+	private int id;
+	@Id
+	//@Column(name="BORD_ID")
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	// bord instance variabelen
 	private int bordBreedte;
 	private int bordLengte;
+	
+	List<Vakje> vakjeArray = new ArrayList<Vakje>();
 	// getters and setters
 
 	public int getBordBreedte() {
@@ -18,6 +46,16 @@ public class Bord {
 		this.bordBreedte = bordBreedte;
 	}
 
+	@OneToMany(cascade = {CascadeType.ALL}) // fetch=FetchType.LAZY
+	//@JoinColumn(name="BORD_ID")
+	public List<Vakje> getVakjeArray() {
+		return vakjeArray;
+	}
+
+	public void setVakjeArray(List<Vakje> vakjeArray) {
+		this.vakjeArray = vakjeArray;
+	}
+
 	public int getBordLengte() {
 		return bordLengte;
 	}
@@ -26,23 +64,18 @@ public class Bord {
 		this.bordLengte = bordLengte;
 	}
 
-	Vakje[][] vakjeArray;
+	
 
 	// bord constructor, maak bord dmv arraylist
 	public Bord(int x, int y) {
 
-		bordBreedte = x;
-		bordLengte = y;
-		vakjeArray = new Vakje[x][y];
+		this.bordBreedte = x;
+		this.bordLengte = y;
+		
 
 		// Vul de Array met Vakjes.
-		for (int ix = 0; ix < x; ix++) {
-
-			for (int iy = 0; iy < y; iy++) {
-
-				vakjeArray[ix][iy] = new Vakje();
-
-			}
+		for (int i = 0; i < x*y; i++) {
+			vakjeArray.add(new Vakje());
 		}
 
 	}
@@ -56,6 +89,13 @@ public class Bord {
 		return true;
 
 	}
+	
+	public Vakje giveVakje(int x, int y){
+		
+		int vakje = x*bordLengte+y;
+		return vakjeArray.get(vakje);
+		
+	}
 
 	// Print het bord uit door op elk vakje in de vakjeArray een toString aan te
 	// roepen
@@ -67,7 +107,7 @@ public class Bord {
 
 			for (int i = 0; i <= bordBreedte - 1; i++) {
 
-				sb.append(vakjeArray[i][j].toString(eigenbord));
+				sb.append(giveVakje(i,j).toString(eigenbord));
 				sb.append(" "); // eerste is 0,9
 
 			}
@@ -87,7 +127,7 @@ public class Bord {
 			for (int j = -1; j <= 1; j++) {
 
 				if (checkGeldigheidCoordinaten(x+i, y+j) && !(i + j == 0) && !(i == j)) {
-					if (vakjeArray[x+i][y+j].isBevatBoot()) {
+					if (giveVakje(i+1,j+1).isBevatBoot()) {
 						resultaat = true;
 					}
 

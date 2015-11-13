@@ -1,6 +1,70 @@
 package nl.zwolle.gameClasses;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
 public class Boot {
+	
+	private int id2;
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	public int getId2() {
+		return id2;
+	}
+
+
+	public void setId2(int id2) {
+		this.id2 = id2;
+	}
+
+	public static void setBootNamen(String[] bootNamen) {
+		Boot.bootNamen = bootNamen;
+	}
+
+
+	public static void setBootLengten(int[] bootLengten) {
+		Boot.bootLengten = bootLengten;
+	}
+
+
+	public static void setIdCounter(int idCounter) {
+		Boot.idCounter = idCounter;
+	}
+
+
+	public void setLigging(boolean ligging) {
+		this.ligging = ligging;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public void setxMin(int xMin) {
+		this.xMin = xMin;
+	}
+
+
+	public void setxMax(int xMax) {
+		this.xMax = xMax;
+	}
+
+
+	public void setyMin(int yMin) {
+		this.yMin = yMin;
+	}
+
+
+	public void setyMax(int yMax) {
+		this.yMax = yMax;
+	}
 
 	public static final int VLIEGDEKSHIP = 0;
 	public static final int SLAGSCHIP = 1;
@@ -24,6 +88,62 @@ public class Boot {
 
 	// coordinaten van de gehele boot
 	private int xMin;
+	public static int getVliegdekship() {
+		return VLIEGDEKSHIP;
+	}
+
+	public static int getSlagschip() {
+		return SLAGSCHIP;
+	}
+
+	public static int getOnderzeer() {
+		return ONDERZEER;
+	}
+
+	public static int getTorpedojager() {
+		return TORPEDOJAGER;
+	}
+
+	public static int getPatrouilleship() {
+		return PATROUILLESHIP;
+	}
+
+	public static String[] getBootNamen() {
+		return bootNamen;
+	}
+
+	public static int[] getBootLengten() {
+		return bootLengten;
+	}
+
+	public static int getIdCounter() {
+		return idCounter;
+	}
+
+	public boolean isLigging() {
+		return ligging;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getxMin() {
+		return xMin;
+	}
+
+	public int getxMax() {
+		return xMax;
+	}
+
+	public int getyMin() {
+		return yMin;
+	}
+
+	public int getyMax() {
+		return yMax;
+	}
+
 	private int xMax;
 	private int yMin;
 	private int yMax;
@@ -113,7 +233,7 @@ public class Boot {
 				// als het vakje zelf of de vakjes om het gekozen vakje een boot
 				// bevatten, of het is een ongeldig vakje kan de boot niet
 				// geplaatst worden
-				if ((!b.checkGeldigheidCoordinaten(ix, iy) || b.vakjeArray[ix][iy].isBevatBoot() || b.surroundedByBoats(ix, iy))) {
+				if ((!b.checkGeldigheidCoordinaten(ix, iy) ||b.giveVakje(ix,iy).isBevatBoot() || b.surroundedByBoats(ix, iy))) {
 
 					legalePlaats = false;
 					break;
@@ -126,7 +246,7 @@ public class Boot {
 			for (int ix = xMin; ix <= xMax; ix++) {
 				for (int iy = yMin; iy <= yMax; iy++) {
 
-					b.vakjeArray[ix][iy].setBevatBoot(true, this);
+					b.giveVakje(ix,iy).setBevatBoot(true, this);
 
 				}
 			}

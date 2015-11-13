@@ -1,9 +1,28 @@
 package nl.zwolle.gameClasses;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
 public class Vakje {
+	
+	private int id;
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	// instace variablelen
 	private boolean bevatBoot;
@@ -19,6 +38,19 @@ public class Vakje {
 	public void setBevatBoot(boolean bevatBoot, Boot boot) {
 		this.bevatBoot = bevatBoot;
 		this.boot = boot;
+	}
+
+	@OneToOne
+	public Boot getBoot() {
+		return boot;
+	}
+
+	public void setBoot(Boot boot) {
+		this.boot = boot;
+	}
+
+	public void setBevatBoot(boolean bevatBoot) {
+		this.bevatBoot = bevatBoot;
 	}
 
 	public boolean isBeschoten() {

@@ -1,10 +1,21 @@
 package nl.zwolle.gameClasses;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
 public class Speler {
 
 	public int getHoeveelheidBoten() {
@@ -17,7 +28,7 @@ public class Speler {
 
 	protected String naam;
 	protected Bord bord;
-	protected ArrayList<Boot> bootArray= new ArrayList<Boot>();
+	protected List<Boot> bootArray= new ArrayList<Boot>();
 	protected int hoeveelheidBoten = 0;
 
 	// Overloaded constructors met standaard waarden: Naam=AI, x=10, y=10
@@ -33,15 +44,31 @@ public class Speler {
 	}
 
 	public Speler(String naam, int xCoordinaat, int yCoordinaat) {
-		bord = new Bord(xCoordinaat, yCoordinaat);
+		this.bord = new Bord(xCoordinaat, yCoordinaat);
 		this.naam = naam;
 	}
+	private int id;
+	@Id
+	//@Column(name="SPELER_ID")
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	public int getId() {
+		return id;
+	}
 
-	public ArrayList<Boot> getBootArray() {
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	//getters setters
+	@OneToMany(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
+	//@JoinColumn(name="SPELER_ID")
+	public List<Boot> getBootArray() {
 		return bootArray;
 	}
 
-	public void setBootArray(ArrayList<Boot> bootArray) {
+	public void setBootArray(List<Boot> bootArray) {
 		this.bootArray = bootArray;
 	}
 
@@ -53,9 +80,14 @@ public class Speler {
 		this.naam = naam;
 	}
 	
-	
+	@OneToOne(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
+	//@JoinColumn(name="SPELER_ID")
 	public Bord getBord() {
 		return bord;
+	}
+
+	public void setBord(Bord bord) {
+		this.bord = bord;
 	}
 
 	// als coordinaat geldig is en niet al eerder is beschoten, schiet
@@ -66,14 +98,14 @@ public class Speler {
 		// int x = xCoordinaat-1;
 		// int y = yCoordinaat-1;
 
-		if (bord.checkGeldigheidCoordinaten(x, y) && !(bord.vakjeArray[x][y].isBeschoten())) {
+		if (bord.checkGeldigheidCoordinaten(x, y) && !(bord.giveVakje(x,y).isBeschoten())) {
 
-			bord.vakjeArray[x][y].setBeschoten(true);
+			bord.giveVakje(x,y).setBeschoten(true);
 
-			if (bord.vakjeArray[x][y].isBevatBoot()) {
+			if (bord.giveVakje(x,y).isBevatBoot()) {
 				System.out.println("Boem!");
-				bord.vakjeArray[x][y].boot.verliesLeven();
-				if (bord.vakjeArray[x][y].boot.isDood()) {
+				bord.giveVakje(x,y).boot.verliesLeven();
+				if (bord.giveVakje(x,y).boot.isDood()) {
 					System.out.println("Boot gezonken");
 				}
 
