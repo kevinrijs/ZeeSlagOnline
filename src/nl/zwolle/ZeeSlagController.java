@@ -39,15 +39,17 @@ public class ZeeSlagController {
 		
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
 		player1.setHoeveelheidBoten(boats);
-		
+			
+		//database test
+		//ZeeSlagDOA.saveSpeler(player1);
 		
 		
 		session.setAttribute("player1", player1);
 		model.addAttribute("player1", player1);
 
 		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
-		model.addAttribute("dimensionX", dimensionX);
-		model.addAttribute("dimensionY", dimensionY);
+		session.setAttribute("dimensionX", dimensionX);
+		session.setAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
 		
 		if(opponent.equals("computer")){
@@ -64,6 +66,26 @@ public class ZeeSlagController {
 		
 	}
 	
+	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
+	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate){
+		
+		int dimensionX =(int) session.getAttribute("dimensionX");
+		int dimensionY = (int) session.getAttribute("dimensionY");
+		
+		System.out.println(xCoordinate+" "+yCoordinate);
+		int x = Integer.parseInt(xCoordinate);
+		int y = Integer.parseInt(yCoordinate);
+		
+		Speler speler = (Speler) session.getAttribute("player1");
+		
+		
+		
+		return "/placeBoats";
+		
+	}
+	
+	
+	
 	@RequestMapping("/waitingRoom")
 	public String checkForSecondPlayer(Model model, HttpSession session) {
 		
@@ -76,7 +98,7 @@ public class ZeeSlagController {
 		model.addAttribute("dimensionY", ((Speler)session.getAttribute("player1")).getBord().getBordLengte());
 		model.addAttribute("numberOfBoats", ((Speler)session.getAttribute("player1")).getHoeveelheidBoten());
 		
-		ZeeSlagDOA.create();
+		
 		
 		
 		

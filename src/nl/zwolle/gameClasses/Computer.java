@@ -43,19 +43,19 @@ public class Computer extends Speler {
 
 
 
-				if (b.checkGeldigheidCoordinaten(computerX, computerY) && !(b.vakjeArray[computerX][computerY].isBeschoten())){
+				if (b.checkGeldigheidCoordinaten(computerX, computerY) && !b.giveVakje(computerX, computerY).isBeschoten()){
 
-					b.vakjeArray[computerX][computerY].setBeschoten(true);
+					b.giveVakje(computerX, computerY).setBeschoten(true);
 					shotSucceeded =true;
 					System.out.println(computerX + " " + computerY);
 
-					if (b.vakjeArray[computerX][computerY].isBevatBoot()) {
+					if (b.giveVakje(computerX, computerY).isBevatBoot()) {
 						System.out.println("Boem!");
-						b.vakjeArray[computerX][computerY].boot.verliesLeven();
+						b.giveVakje(computerX, computerY).boot.verliesLeven();
 						hitCoordinateX = computerX;
 						hitCoordinateY = computerY;
 						
-						if (b.vakjeArray[computerX][computerY].boot.isDood()){
+						if (b.giveVakje(computerX, computerY).boot.isDood()){
 							hitCoordinateX = -1;
 							hitCoordinateY = -1;
 							System.out.println("Boot gezonken");
@@ -118,22 +118,22 @@ public class Computer extends Speler {
 				// check whether this coordinate is valid	
 
 
-				if (b.checkGeldigheidCoordinaten(computerX, computerY)&& (!(b.vakjeArray[computerX][computerY].isBeschoten()))){
+				if (b.checkGeldigheidCoordinaten(computerX, computerY)&& (!(b.giveVakje(computerX, computerY).isBeschoten()))){
 					
 
 
-						b.vakjeArray[computerX][computerY].setBeschoten(true);
+					b.giveVakje(computerX, computerY).setBeschoten(true);
 						System.out.println(computerX + " " + computerY);
 						shotSucceeded =true;
 
-						if (b.vakjeArray[computerX][computerY].isBevatBoot()) {
+						if (b.giveVakje(computerX, computerY).isBevatBoot()) {
 
-							b.vakjeArray[computerX][computerY].boot.verliesLeven();
+							b.giveVakje(computerX, computerY).boot.verliesLeven();
 							secondHit = true;
 							System.out.println("Boem!");
 
 
-							if (b.vakjeArray[computerX][computerY].boot.isDood()){
+							if (b.giveVakje(computerX, computerY).boot.isDood()){
 								hitCoordinateX = -1;
 								hitCoordinateY = -1;
 								secondHit = false;
@@ -189,21 +189,21 @@ public class Computer extends Speler {
 		computerY = hitCoordinateY;
 
 
-		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.vakjeArray[computerX][computerY].isBeschoten()){
+		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.giveVakje(computerX, computerY).isBeschoten()){
 
 
 			deltaDirection = false; // turn shooting position around
 			rangeFromInitialHit = 1; // reset 
 			shootLeftOfX(b);
 
-		} else if (b.vakjeArray[computerX][computerY].isBevatBoot()){
+		} else if (b.giveVakje(computerX, computerY).isBevatBoot()){
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
-			b.vakjeArray[computerX][computerY].boot.verliesLeven();
+			b.giveVakje(computerX, computerY).setBeschoten(true);
+			b.giveVakje(computerX, computerY).boot.verliesLeven();
 			System.out.println("Boem!");
 			rangeFromInitialHit += 1;
 
-			if (b.vakjeArray[computerX][computerY].boot.isDood()){
+			if (b.giveVakje(computerX, computerY).boot.isDood()){
 				hitCoordinateX = -1;
 				hitCoordinateY = -1;
 				secondHit = false;
@@ -213,7 +213,7 @@ public class Computer extends Speler {
 		} else { // als mis
 
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
+			b.giveVakje(computerX, computerY).setBeschoten(true);
 			deltaDirection = false;
 			rangeFromInitialHit =1;
 			System.out.println("Plons");
@@ -229,21 +229,21 @@ public class Computer extends Speler {
 		computerY = hitCoordinateY;
 
 
-		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.vakjeArray[computerX][computerY].isBeschoten()){
+		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.giveVakje(computerX, computerY).isBeschoten()){
 
 
 			deltaDirection = true; // turn shootingposition around
 			rangeFromInitialHit =1; // reset 
 			shootLeftOfX(b);
 
-		} else if (b.vakjeArray[computerX][computerY].isBevatBoot()){
+		} else if (b.giveVakje(computerX, computerY).isBevatBoot()){
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
-			b.vakjeArray[computerX][computerY].boot.verliesLeven();
+			b.giveVakje(computerX, computerY).setBeschoten(true);
+			b.giveVakje(computerX, computerY).boot.verliesLeven();
 			System.out.println("Boem!");
 			rangeFromInitialHit += 1;
 
-			if (b.vakjeArray[computerX][computerY].boot.isDood()){
+			if (b.giveVakje(computerX, computerY).boot.isDood()){
 				hitCoordinateX = -1;
 				hitCoordinateY = -1;
 				secondHit = false;
@@ -252,7 +252,7 @@ public class Computer extends Speler {
 			}
 		} else { // als mis
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
+			b.giveVakje(computerX, computerY).setBeschoten(true);
 			deltaDirection = true;
 			rangeFromInitialHit =1;
 			System.out.println("Plons");
@@ -266,20 +266,20 @@ public class Computer extends Speler {
 		computerY = hitCoordinateY+ rangeFromInitialHit; //+ for right or up, - for left or down;
 
 
-		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.vakjeArray[computerX][computerY].isBeschoten()){
+		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.giveVakje(computerX, computerY).isBeschoten()){
 
 			deltaDirection = false; // turn shootingposition around
 			rangeFromInitialHit =1; // reset 
 			shootBelowOfY(b);
 
-		} else if (b.vakjeArray[computerX][computerY].isBevatBoot()){
+		} else if (b.giveVakje(computerX, computerY).isBevatBoot()){
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
-			b.vakjeArray[computerX][computerY].boot.verliesLeven();
+			b.giveVakje(computerX, computerY).setBeschoten(true);
+			b.giveVakje(computerX, computerY).boot.verliesLeven();
 			System.out.println("Boem!");
 			rangeFromInitialHit += 1;
 
-			if (b.vakjeArray[computerX][computerY].boot.isDood()){
+			if (b.giveVakje(computerX, computerY).boot.isDood()){
 				hitCoordinateX = -1;
 				hitCoordinateY = -1;
 				secondHit = false;
@@ -288,7 +288,7 @@ public class Computer extends Speler {
 			}
 		} else { // als mis
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
+			b.giveVakje(computerX, computerY).setBeschoten(true);
 			deltaDirection = false;
 			rangeFromInitialHit =1;
 			System.out.println("Plons");
@@ -304,20 +304,20 @@ public class Computer extends Speler {
 		computerY = hitCoordinateY- rangeFromInitialHit; //+ for right or up, - for left or down;
 
 
-		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.vakjeArray[computerX][computerY].isBeschoten()){
+		if (!b.checkGeldigheidCoordinaten(computerX, computerY) || b.giveVakje(computerX, computerY).isBeschoten()){
 
 			deltaDirection = true; // turn shootingposition around
 			rangeFromInitialHit =1; // reset 
 			shootAboveofY(b);
 
-		} else if (b.vakjeArray[computerX][computerY].isBevatBoot()){
+		} else if (b.giveVakje(computerX, computerY).isBevatBoot()){
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
-			b.vakjeArray[computerX][computerY].boot.verliesLeven();
+			b.giveVakje(computerX, computerY).setBeschoten(true);
+			b.giveVakje(computerX, computerY).boot.verliesLeven();
 			System.out.println("Boem!");
 			rangeFromInitialHit += 1;
 
-			if (b.vakjeArray[computerX][computerY].boot.isDood()){
+			if (b.giveVakje(computerX, computerY).boot.isDood()){
 				hitCoordinateX = -1;
 				hitCoordinateY = -1;
 				secondHit = false;
@@ -326,7 +326,7 @@ public class Computer extends Speler {
 			}
 		} else { // als mis
 
-			b.vakjeArray[computerX][computerY].setBeschoten(true);
+			b.giveVakje(computerX, computerY).setBeschoten(true);
 			deltaDirection = true;
 			rangeFromInitialHit =1;
 			System.out.println("Plons");

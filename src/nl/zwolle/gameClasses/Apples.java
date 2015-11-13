@@ -11,12 +11,12 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Apples {
 
-	private int id;
+	
 	private String naam;
 	private int jaar;
 	
 	
-	
+	private int id;
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
