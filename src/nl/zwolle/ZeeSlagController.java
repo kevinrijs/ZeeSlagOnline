@@ -48,8 +48,8 @@ public class ZeeSlagController {
 		model.addAttribute("player1", player1);
 
 		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
-		model.addAttribute("dimensionX", dimensionX);
-		model.addAttribute("dimensionY", dimensionY);
+		session.setAttribute("dimensionX", dimensionX);
+		session.setAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
 		
 		if(opponent.equals("computer")){
@@ -69,12 +69,18 @@ public class ZeeSlagController {
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
 	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate){
 		
+		int dimensionX =(int) session.getAttribute("dimensionX");
+		int dimensionY = (int) session.getAttribute("dimensionY");
+		
+		System.out.println(xCoordinate+" "+yCoordinate);
 		int x = Integer.parseInt(xCoordinate);
 		int y = Integer.parseInt(yCoordinate);
 		
+		Speler speler = (Speler) session.getAttribute("player1");
 		
 		
-		return null;
+		
+		return "/placeBoats";
 		
 	}
 	
