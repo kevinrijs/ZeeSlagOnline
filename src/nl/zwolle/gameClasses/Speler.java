@@ -49,7 +49,7 @@ public class Speler {
 	}
 	private int id;
 	@Id
-	@Column(name="SPELER_ID")
+	//@Column(name="SPELER_ID")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	public int getId() {
@@ -63,7 +63,7 @@ public class Speler {
 	
 	//getters setters
 	@OneToMany(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
-	@JoinColumn(name="SPELER_ID")
+	//@JoinColumn(name="SPELER_ID")
 	public List<Boot> getBootArray() {
 		return bootArray;
 	}
@@ -81,7 +81,7 @@ public class Speler {
 	}
 	
 	@OneToOne(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
-	@JoinColumn(name="SPELER_ID")
+	//@JoinColumn(name="SPELER_ID")
 	public Bord getBord() {
 		return bord;
 	}

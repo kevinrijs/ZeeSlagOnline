@@ -19,7 +19,7 @@ public class Bord {
 	
 	private int id;
 	@Id
-	@Column(name="BORD_ID")
+	//@Column(name="BORD_ID")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	public int getId() {
@@ -47,7 +47,7 @@ public class Bord {
 	}
 
 	@OneToMany(cascade = {CascadeType.ALL}) // fetch=FetchType.LAZY
-	@JoinColumn(name="BORD_ID")
+	//@JoinColumn(name="BORD_ID")
 	public List<Vakje> getVakjeArray() {
 		return vakjeArray;
 	}
