@@ -31,65 +31,58 @@
 		
 		
 
-		function onClick(evt) {
-			var mousePosition =getMousePos(canvas, evt);
-			
-			
-				for (index = 0; index < startPositionsOfTilesX.length; ++index) {
-				if((startPositionsOfTilesX[index]/100)>mousePosition.x ){
-					for(var j=0; j<startPositionsOfTilesY.length;j++){
-					if((startPositionsOfTilesY[index]/100)>mousePosition.y ){
-					alert('You clicked on tile: ' )
-					}
-					}
-				
-				}
-				}
-			
-			}
-			canvas.onclick = onClick;
 		
+		function onClick(evt) { 
+			var mousePosition = getMousePos(canvas, evt);
+			
+			var x = Math.floor(mousePosition.x/100);
+			var y = Math.floor(mousePosition.y/100);
+			
+			alert('You clicked on tile: '+'x: '+x+' y: ' +y);
+
+		}
+		canvas.onclick = onClick;
+
+		function getMousePos(canvas, evt) {
+			var rect = canvas.getBoundingClientRect();
+			return {
+				x : evt.clientX - rect.left,
+				y : evt.clientY - rect.top
+			};
+		}
+
+		canvas.addEventListener('mousemove', function(evt) {
+			var mousePos = getMousePos(canvas, evt);
+			var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+
+		}, false);
 
 		
-      
-      function getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
-        };
-      }
-      
-
-      canvas.addEventListener('mousemove', function(evt) {
-        var mousePos = getMousePos(canvas, evt);
-        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-    
-      }, false);
-		
-		
-		
-
-		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+		function drawField(context, tableColums, tableRows,
+				startPositionsOfTilesX, startPositionsOfTilesY) {
 			var tileWidth = 100;
 			var tileHeight = 100;
 
-			for (var i = 0; i < tableColumns; i++) {
-				for (var j = 0; j < tableRows; j++) {
+			for (var i = tableRows-1; i >= 0; i--) {
+				var newY = (i * 100);
+				startPositionsOfTilesY.push(newY);
+				console.log("y: "+i);
+				for (var j = 0; j < tableColumns; j++) {
+					
+					
 
-					var newX =(i * 100);
-					var newY=( j * 100);
 					context.beginPath();
-					context.rect(newX ,newY, tileWidth, tileHeight);				
+					context.rect(newX, newY, tileWidth, tileHeight);
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
 					context.stroke();
 					
+					var newX = (j * 100);
 					startPositionsOfTilesX.push(newX);
-					startPositionsOfTilesY.push(newY);
-					
+					console.log("x: "+j);
 				}
 			}
+
 		}
 	</script>
 </body>
