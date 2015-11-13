@@ -64,6 +64,20 @@ public class ZeeSlagController {
 		
 	}
 	
+	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
+	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate){
+		
+		int x = Integer.parseInt(xCoordinate);
+		int y = Integer.parseInt(yCoordinate);
+		
+		
+		
+		return null;
+		
+	}
+	
+	
+	
 	@RequestMapping("/waitingRoom")
 	public String checkForSecondPlayer(Model model, HttpSession session) {
 		
