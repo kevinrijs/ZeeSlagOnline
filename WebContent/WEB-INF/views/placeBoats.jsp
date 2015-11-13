@@ -4,15 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <title>Place boats</title>
 </head>
 <body>
 	<h1>Battleship Online</h1>
 	<h2>Place the boats</h2>
+	<form method = "post" action="weetNogNietWatIkMetDezeGaDoen">
+	<input type="hidden" id="xCoordinate"></input>
+	<input type="hidden" id ="yCoordinate"></input>	</form>
 	<canvas id="myCanvas" width="${dimensionX*1000}"
 		height="${dimensionY*1000}"></canvas>
+		
 
-
+	$('#input1").text();
+	$('form').submit();
 
 
 	<script>
@@ -41,7 +47,11 @@
 			var y = Math.floor(mousePosition.y/tileHeight);
 			
 			if(x<tableColumns&&y<tableRows){
-			alert('You clicked on tile: '+'x: '+x+' y: ' +y);}
+			
+			$('#xCoordinate').text(x);
+			$('#yCoordinate').text(y);
+			$('form').submit();
+			}
 			else{
 			alert('You clicked outside of the field')}
 
