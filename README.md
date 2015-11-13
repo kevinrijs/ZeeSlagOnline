@@ -1,7 +1,7 @@
 # ZeeSlagOnline
 
 
-# mogelijke plaatjes voor boten:
+### mogelijke plaatjes voor boten:
 -  http://images.jijbent.nl/spelregels/zeeslag/image001.gif
 - http://targets.ws/shooting-targets/battleship-target-3.gif
 -  http://www.lemon64.com/games/screenshots/ext_full/b/battleship_(epyx)_04.gif
