@@ -38,43 +38,43 @@ public class ZeeSlagDOA {
 	}
 
 
-	public static void remove(Long id){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		Apples apple = em.find(Apples.class, id);
-		if(apple != null){
-			em.remove( apple );
-		}
-		t.commit();
-		em.close();
-	}
-
-	/**
-	 * Haal een rit op a.d.h.v. zijn id
-	 */
-	public static Apples find(Long id){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		Apples apple = em.find(Apples.class, id);
-		t.commit();
-		em.close();
-		return apple;
-	}
-
-	/**
-	 * Haal alle ritten op uit de database
-	 */
-	public static List<Apples> all(){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		List<Apples> ritten = em.createQuery("from Apples", Apples.class).getResultList();
-		t.commit();
-		em.close();
-		return ritten;
-	}
+//	public static void remove(Long id){
+//		EntityManager em = emf.createEntityManager();
+//		EntityTransaction t = em.getTransaction();
+//		t.begin();
+//		Apples apple = em.find(Apples.class, id);
+//		if(apple != null){
+//			em.remove( apple );
+//		}
+//		t.commit();
+//		em.close();
+//	}
+//
+//	/**
+//	 * Haal een rit op a.d.h.v. zijn id
+//	 */
+//	public static Apples find(Long id){
+//		EntityManager em = emf.createEntityManager();
+//		EntityTransaction t = em.getTransaction();
+//		t.begin();
+//		Apples apple = em.find(Apples.class, id);
+//		t.commit();
+//		em.close();
+//		return apple;
+//	}
+//
+//	/**
+//	 * Haal alle ritten op uit de database
+//	 */
+//	public static List<Apples> all(){
+//		EntityManager em = emf.createEntityManager();
+//		EntityTransaction t = em.getTransaction();
+//		t.begin();
+//		List<Apples> ritten = em.createQuery("from Apples", Apples.class).getResultList();
+//		t.commit();
+//		em.close();
+//		return ritten;
+//	}
 
 	//	public static Speler saveSpeler(Speler player){
 	//		
