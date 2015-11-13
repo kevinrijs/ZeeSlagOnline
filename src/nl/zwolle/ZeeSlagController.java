@@ -1,4 +1,8 @@
 package nl.zwolle;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -7,14 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import nl.zwolle.gameClasses.Apples;
 import nl.zwolle.gameClasses.Computer;
 import nl.zwolle.gameClasses.Speler;
 
 
 
+
 @Controller
 public class ZeeSlagController {
-	
 	
 	@RequestMapping("/")
 	public String beginGame(Model model, HttpSession session) {
@@ -70,6 +75,11 @@ public class ZeeSlagController {
 		model.addAttribute("dimensionX", ((Speler)session.getAttribute("player1")).getBord().getBordBreedte());
 		model.addAttribute("dimensionY", ((Speler)session.getAttribute("player1")).getBord().getBordLengte());
 		model.addAttribute("numberOfBoats", ((Speler)session.getAttribute("player1")).getHoeveelheidBoten());
+		
+		ZeeSlagDOA.create();
+		
+		
+		
 		
 		return "waitingRoom";
 	}
