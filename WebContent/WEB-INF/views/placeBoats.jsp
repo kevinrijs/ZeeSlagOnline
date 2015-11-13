@@ -23,6 +23,8 @@
 		var context = canvas.getContext('2d');
 		var startPositionsOfTilesX = [];
 		var startPositionsOfTilesY = [];
+		var tileWidth = 80;
+		var tileHeight = 80;
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
@@ -35,10 +37,13 @@
 		function onClick(evt) { 
 			var mousePosition = getMousePos(canvas, evt);
 			
-			var x = Math.floor(mousePosition.x/100);
-			var y = Math.floor(mousePosition.y/100);
+			var x = Math.floor(mousePosition.x/tileWidth);
+			var y = Math.floor(mousePosition.y/tileHeight);
 			
-			alert('You clicked on tile: '+'x: '+x+' y: ' +y);
+			if(x<tableColumns&&y<tableRows){
+			alert('You clicked on tile: '+'x: '+x+' y: ' +y);}
+			else{
+			alert('You clicked outside of the field')}
 
 		}
 		canvas.onclick = onClick;
@@ -58,32 +63,27 @@
 		}, false);
 
 		
-		function drawField(context, tableColums, tableRows,
-				startPositionsOfTilesX, startPositionsOfTilesY) {
-			var tileWidth = 100;
-			var tileHeight = 100;
+		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+			
 
-			for (var i = tableRows-1; i >= 0; i--) {
-				var newY = (i * 100);
-				startPositionsOfTilesY.push(newY);
-				console.log("y: "+i);
-				for (var j = 0; j < tableColumns; j++) {
-					
-					
+			for (var i = 0; i < tableColumns; i++) {
+				for (var j = 0; j < tableRows; j++) {
 
+					var newX =(i * tileWidth);
+					var newY=( j * tileHeight);
 					context.beginPath();
-					context.rect(newX, newY, tileWidth, tileHeight);
+					context.rect(newX ,newY, tileWidth, tileHeight);				
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
 					context.stroke();
 					
-					var newX = (j * 100);
 					startPositionsOfTilesX.push(newX);
-					console.log("x: "+j);
+					startPositionsOfTilesY.push(newY);
+					
 				}
 			}
-
 		}
+
 	</script>
 </body>
 </html>
