@@ -41,7 +41,7 @@ public class ZeeSlagController {
 		player1.setHoeveelheidBoten(boats);
 			
 		//database test
-		ZeeSlagDOA.saveSpeler(player1);
+		//ZeeSlagDOA.saveSpeler(player1);
 		
 		
 		session.setAttribute("player1", player1);
