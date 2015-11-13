@@ -40,7 +40,9 @@ public class ZeeSlagController {
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
 		player1.setHoeveelheidBoten(boats);
 		
-		
+		//database test
+		ZeeSlagDOA.saveSpeler(player1);
+		//
 		
 		session.setAttribute("player1", player1);
 		model.addAttribute("player1", player1);
@@ -76,7 +78,7 @@ public class ZeeSlagController {
 		model.addAttribute("dimensionY", ((Speler)session.getAttribute("player1")).getBord().getBordLengte());
 		model.addAttribute("numberOfBoats", ((Speler)session.getAttribute("player1")).getHoeveelheidBoten());
 		
-		ZeeSlagDOA.create();
+		
 		
 		
 		

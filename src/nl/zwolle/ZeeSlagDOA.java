@@ -76,19 +76,16 @@ public class ZeeSlagDOA {
 		return ritten;
 	}
 
-	//	public static Speler saveSpeler(Speler player){
-	//		
-	//		
-	//		
-	//		
-	//		EntityManager em = emf.createEntityManager();
-	//		EntityTransaction t = em.getTransaction();
-	//		t.begin();
-	//		em.persist( player );
-	//		t.commit();
-	//		em.close();
-	//		
-	//		return player;
-	//	}
+		public static Speler saveSpeler(Speler player){
+			System.out.println("hjhkkj");			
+			EntityManager em = emf.createEntityManager();
+			EntityTransaction t = em.getTransaction();
+			t.begin();
+			em.persist( player );
+			t.commit();
+			em.close();
+			
+			return player;
+		}
 
 }
