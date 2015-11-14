@@ -14,7 +14,19 @@
 	<h2>Place the boats</h2>
 	<form:form name="formnaam" method = "post" action="placeBoats">
 	<input type="hidden" id="xCoordinate" name="xCoordinate"></input>
-	<input type="hidden" id ="yCoordinate" name="yCoordinate"></input>	</form:form>
+	<input type="hidden" id ="yCoordinate" name="yCoordinate"></input>
+	<h4>Boat orientation:</h4>
+	<input type="radio" name="orientation" value="false" checked>Up
+	<br>
+	<input type="radio" name="orientation" value="true">Right
+	<h4>Select Boat</h4>
+	<input type="radio" name="boatType" value = "0" checked>Aircraft Carrier
+	<input type="radio" name="boatType" value = "1">Battleship
+	<input type="radio" name="boatType" value = "2">Submarine
+	<input type="radio" name="boatType" value = "3">Cruiser
+	<input type="radio" name="boatType" value = "4">Patrol boat
+	
+	</form:form>
 	<canvas id="myCanvas" width="${dimensionX*1000}"
 		height="${dimensionY*1000}"></canvas>
 		
@@ -30,8 +42,8 @@
 		var context = canvas.getContext('2d');
 		var startPositionsOfTilesX = [];
 		var startPositionsOfTilesY = [];
-		var tileWidth = 80;
-		var tileHeight = 80;
+		var tileWidth = 50;
+		var tileHeight = 50;
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
@@ -79,14 +91,24 @@
 
 			for (var i = 0; i < tableColumns; i++) {
 				for (var j = 0; j < tableRows; j++) {
-
+					
 					var newX =(i * tileWidth);
 					var newY=( j * tileHeight);
+					
+					
 					context.beginPath();
-					context.rect(newX ,newY, tileWidth, tileHeight);				
+					context.rect(newX ,newY, tileWidth, tileHeight);					
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
+					
+					var test =${player1.getBord().giveVakje(i,j).isBevatBoot()};
+					if(test==true){
+						context.fillStyle="red";
+						context.fill;
+					}
 					context.stroke();
+					
+					
 					
 					startPositionsOfTilesX.push(newX);
 					startPositionsOfTilesY.push(newY);
