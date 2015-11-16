@@ -93,7 +93,8 @@ public class ZeeSlagController {
 
 
 
-			//TODO kijk of speler en opponent niet al coupled is
+			//TODO kijk of speler en opponent niet al coupled is EN als hij niet zichzelf is misschien join knop weghalen
+			//TODO spelers meegeven
 			
 			//zet tegenstander voor huidige speler
 			Speler tempSpeler = (Speler)session.getAttribute("player1");
@@ -119,6 +120,8 @@ public class ZeeSlagController {
 
 	@RequestMapping("/waitingRoomRefresh")
 	public String refreshGame(Model model, HttpSession session) {
+		
+		
 
 		// kijk if coupled en stuur door
 		Speler tempSpeler = (Speler)session.getAttribute("player1");
@@ -127,6 +130,7 @@ public class ZeeSlagController {
 		Speler tempSpeler2 = ZeeSlagDOA.find(tempSpeler.getId());
 		if (tempSpeler2.isCoupled() && tempSpeler2.getOpponentId()!=-1){
 			return "placeBoats";
+			//TODO spelers meegeven
 		}
 
 
