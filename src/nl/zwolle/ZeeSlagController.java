@@ -1,4 +1,6 @@
 package nl.zwolle;
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import nl.zwolle.gameClasses.Apples;
+import nl.zwolle.gameClasses.Boot;
 import nl.zwolle.gameClasses.Computer;
 import nl.zwolle.gameClasses.Speler;
 
@@ -48,8 +51,8 @@ public class ZeeSlagController {
 		model.addAttribute("player1", player1);
 
 		model.addAttribute("name", ((Speler)session.getAttribute("player1")).getNaam());
-		model.addAttribute("dimensionX", dimensionX);
-		model.addAttribute("dimensionY", dimensionY);
+		session.setAttribute("dimensionX", dimensionX);
+		session.setAttribute("dimensionY", dimensionY);
 		model.addAttribute("numberOfBoats", boats);
 		
 		if(opponent.equals("computer")){
@@ -69,14 +72,26 @@ public class ZeeSlagController {
 	}
 	
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
-	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate){
+	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate,boolean orientation,int boatType){
 		
+		
+		
+		int dimensionX =(int) session.getAttribute("dimensionX");
+		int dimensionY = (int) session.getAttribute("dimensionY");
+		
+		System.out.println(xCoordinate+" "+yCoordinate);
 		int x = Integer.parseInt(xCoordinate);
 		int y = Integer.parseInt(yCoordinate);
 		
+		Speler player = (Speler) session.getAttribute("player1");
+		player.nieuweBoot(x, y, orientation, boatType);
+		
+		System.out.println(player.getBord().toString(true));
 		
 		
-		return null;
+		
+		
+		return "/placeBoats";
 		
 	}
 	
