@@ -67,6 +67,10 @@ public class Bord {
 	
 
 	// bord constructor, maak bord dmv arraylist
+	public Bord(){
+		
+	}
+	
 	public Bord(int x, int y) {
 
 		this.bordBreedte = x;
