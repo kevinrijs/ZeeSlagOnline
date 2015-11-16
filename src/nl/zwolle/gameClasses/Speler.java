@@ -127,8 +127,10 @@ public class Speler {
 
 			bootArray.add(nieuwBoot);
 			hoeveelheidBoten++;
+			
 			return true;
 		}
+		System.out.println("boat placement failed");
 		return false;
 	}
 
