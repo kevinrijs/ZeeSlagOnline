@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Boot {
 	
+	
 	private int id2;
 	@Id
 	@GeneratedValue(generator="increment")

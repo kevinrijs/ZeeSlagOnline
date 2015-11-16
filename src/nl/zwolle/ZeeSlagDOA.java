@@ -12,7 +12,6 @@ import nl.zwolle.gameClasses.Speler;
 
 
 
-
 public class ZeeSlagDOA {
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("apples");

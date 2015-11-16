@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Bord {
 	
+	
 	private int id;
 	@Id
 	//@Column(name="BORD_ID")
@@ -46,7 +47,7 @@ public class Bord {
 		this.bordBreedte = bordBreedte;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL}) // fetch=FetchType.LAZY
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch={FetchType.LAZY})
 	//@JoinColumn(name="BORD_ID")
 	public List<Vakje> getVakjeArray() {
 		return vakjeArray;

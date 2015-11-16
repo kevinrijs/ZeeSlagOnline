@@ -92,7 +92,7 @@ public class Speler {
 	
 	
 	//getters setters
-	@OneToMany(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
+	@OneToMany(cascade = CascadeType.ALL)
 	//@JoinColumn(name="SPELER_ID")
 	public List<Boot> getBootArray() {
 		return bootArray;
@@ -179,6 +179,7 @@ public class Speler {
 			return true;
 		}
 		return false;
+		
 	}
 
 }

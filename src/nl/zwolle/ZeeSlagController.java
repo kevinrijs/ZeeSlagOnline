@@ -48,6 +48,7 @@ public class ZeeSlagController {
 		if(opponent.equals("computer")){
 
 			Speler ai = new Computer(dimensionX, dimensionY);
+			session.setAttribute("player1", player1);
 			session.setAttribute("player2", ai);
 
 			return "placeBoats";
@@ -87,31 +88,35 @@ public class ZeeSlagController {
 	}
 
 	@RequestMapping("/waitingRoomJoin")
-	public String joinGame(Model model, HttpSession session, int opponent ) {
-
-		if(opponent != 0){
+	public synchronized String joinGame(Model model, HttpSession session, int opponent ) {
 
 
+		//kijk of speler en opponent niet al coupled is EN als hij niet zichzelf is misschien join knop weghalen
 
-			//TODO kijk of speler en opponent niet al coupled is EN als hij niet zichzelf is misschien join knop weghalen
-			//TODO spelers meegeven
-			
+
+		Speler tempSpeler = (Speler)session.getAttribute("player1");
+		Speler tempSpeler2 = ZeeSlagDOA.find(opponent);
+
+		if(opponent != 0 &&  opponent != tempSpeler.getId() && !tempSpeler2.isCoupled() && !tempSpeler.isCoupled()){
+
+
+
 			//zet tegenstander voor huidige speler
-			Speler tempSpeler = (Speler)session.getAttribute("player1");
+
 			tempSpeler.setCoupled(true);
 			tempSpeler.setOpponentId(opponent);
 
 			//zet deze speler als tegenstander de opponent
-			Speler tempSpeler2 = ZeeSlagDOA.find(opponent);
+
 			tempSpeler2.setCoupled(true);
 			tempSpeler2.setOpponentId(((Speler)session.getAttribute("player1")).getId());
 
-			//scrijf beide spelers weg naar database
-			ZeeSlagDOA.updateSpeler(tempSpeler);
+			//schrijf beide spelers weg naar database en update session
+			session.setAttribute("player1", ZeeSlagDOA.updateSpeler(tempSpeler));
 			ZeeSlagDOA.updateSpeler(tempSpeler2);
 
-
 		}
+		//TODO spelers meegeven
 
 		return "placeBoats";
 
@@ -120,15 +125,21 @@ public class ZeeSlagController {
 
 	@RequestMapping("/waitingRoomRefresh")
 	public String refreshGame(Model model, HttpSession session) {
-		
-		
 
+
+
+			
 		// kijk if coupled en stuur door
 		Speler tempSpeler = (Speler)session.getAttribute("player1");
-
-
+			
 		Speler tempSpeler2 = ZeeSlagDOA.find(tempSpeler.getId());
-		if (tempSpeler2.isCoupled() && tempSpeler2.getOpponentId()!=-1){
+		tempSpeler =null;
+			
+		
+		if (tempSpeler2.isCoupled() && tempSpeler2.getOpponentId()!= -1){
+				
+				session.setAttribute("player1", tempSpeler2);
+				
 			return "placeBoats";
 			//TODO spelers meegeven
 		}
@@ -136,11 +147,15 @@ public class ZeeSlagController {
 
 
 		//anders terug naar waitingroom
+		// haal nieuwe lijst op en zet hem in n
+
+		List<Speler> gameList = ZeeSlagDOA.hosts();
+		model.addAttribute("gameList", gameList);
 		return "waitingRoom";
 
 	}
-	
-	
+
+
 	//BASTIAAN, mergen ging niet helemaal lekker denk. hieronder jouw 2? controllers. klopt dit?
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
@@ -148,14 +163,16 @@ public class ZeeSlagController {
 
 
 
-		int dimensionX =(int) session.getAttribute("dimensionX");
-		int dimensionY = (int) session.getAttribute("dimensionY");
+		
+		Speler player= (Speler) session.getAttribute("player1");
+		int dimensionX =(player.getBord().getBordBreedte());
+		int dimensionY =(player.getBord().getBordLengte());
 
 		System.out.println(xCoordinate+" "+yCoordinate);
 		int x = Integer.parseInt(xCoordinate);
 		int y = Integer.parseInt(yCoordinate);
 
-		Speler player = (Speler) session.getAttribute("player1");
+		
 		player.nieuweBoot(x, y, orientation, boatType);
 
 		System.out.println(player.getBord().toString(true));
@@ -163,7 +180,7 @@ public class ZeeSlagController {
 
 
 
-		return "/placeBoats";
+		return "placeBoats";
 
 	}
 
@@ -181,7 +198,7 @@ public class ZeeSlagController {
 		player.nieuweBoot(x, y, orientation, boatType);
 
 
-		return null;
+		return "placeBoats";
 
 		//System.out.println(player.getBord().toString(true));
 
