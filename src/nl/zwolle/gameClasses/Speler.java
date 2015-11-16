@@ -130,7 +130,7 @@ public class Speler {
 			
 			return true;
 		}
-		System.out.println("boat placement failed");
+		
 		return false;
 	}
 

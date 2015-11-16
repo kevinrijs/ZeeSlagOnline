@@ -128,7 +128,7 @@ public class Bord {
 
 				if (checkGeldigheidCoordinaten(x+i, y+j) && !(i + j == 0) && !(i == j)) {
 					
-					System.out.println("Vakje "+(x+1)+ " "+(y+1)+ " "+giveVakje(x+1,y+1).isBevatBoot());
+					
 					if (giveVakje(x+i,y+j).isBevatBoot()) {
 						
 						resultaat = true;

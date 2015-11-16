@@ -17,9 +17,9 @@
 	<input type="hidden" id="xCoordinate" name="xCoordinate"></input>
 	<input type="hidden" id ="yCoordinate" name="yCoordinate"></input>
 	<h4>Boat orientation:</h4>
-	<input type="radio" name="orientation" value="false" checked>Up
+	<input type="radio" name="orientation" value="false" checked>Vertical (down)
 	<br>
-	<input type="radio" name="orientation" value="true">Right
+	<input type="radio" name="orientation" value="true">Horizontal (right)
 	<h4>Select Boat</h4>
 	<input id="aircraftcarrier" type="radio" name="boatType" value = "0" >Aircraft Carrier
 	<input id="battleship" type="radio" name="boatType" value = "1">Battleship
@@ -52,7 +52,19 @@
 		</c:forEach> 
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
-	
+		
+		
+		
+		function hideClickedButtons(){
+		if(${boatType0} ===0){$('#aircraftcarrier').hide(400);
+		}
+		
+		
+		}
+		
+		
+		
+		
 		
 		
 		

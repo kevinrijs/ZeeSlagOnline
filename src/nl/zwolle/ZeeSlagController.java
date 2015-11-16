@@ -76,8 +76,7 @@ public class ZeeSlagController {
 		
 		
 		
-		int dimensionX =(int) session.getAttribute("dimensionX");
-		int dimensionY = (int) session.getAttribute("dimensionY");
+		session.setAttribute("type"+boatType, boatType);
 		
 		System.out.println(xCoordinate+" "+yCoordinate);
 		int x = xCoordinate;
