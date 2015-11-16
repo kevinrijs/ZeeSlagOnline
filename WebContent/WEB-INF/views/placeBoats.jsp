@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -16,15 +17,15 @@
 	<input type="hidden" id="xCoordinate" name="xCoordinate"></input>
 	<input type="hidden" id ="yCoordinate" name="yCoordinate"></input>
 	<h4>Boat orientation:</h4>
-	<input type="radio" name="orientation" value="false" checked>Up
+	<input type="radio" name="orientation" value="false" checked>Vertical (down)
 	<br>
-	<input type="radio" name="orientation" value="true">Right
+	<input type="radio" name="orientation" value="true">Horizontal (right)
 	<h4>Select Boat</h4>
-	<input type="radio" name="boatType" value = "0" checked>Aircraft Carrier
-	<input type="radio" name="boatType" value = "1">Battleship
-	<input type="radio" name="boatType" value = "2">Submarine
-	<input type="radio" name="boatType" value = "3">Cruiser
-	<input type="radio" name="boatType" value = "4">Patrol boat
+	<input id="aircraftcarrier" type="radio" name="boatType" value = "0" >Aircraft Carrier
+	<input id="battleship" type="radio" name="boatType" value = "1">Battleship
+	<input id="submarine" type="radio" name="boatType" value = "2">Submarine
+	<input id="cruiser" type="radio" name="boatType" value = "3">Cruiser
+	<input id="patrolboat" type="radio" name="boatType" value = "4" checked>Patrol boat
 	
 	</form:form>
 	<canvas id="myCanvas" width="${dimensionX*1000}"
@@ -44,8 +45,24 @@
 		var startPositionsOfTilesY = [];
 		var tileWidth = 50;
 		var tileHeight = 50;
+		
+		var botenArray = [];	
+		<c:forEach var="vakje" items="${player1.getBord().getVakjeArray()}">
+				botenArray.push(${vakje.isBevatBoot()});
+		</c:forEach> 
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
+		
+		
+		
+		function hideClickedButtons(){
+		if(${boatType0} ===0){$('#aircraftcarrier').hide(400);
+		}
+		
+		
+		}
+		
+		
 		
 		
 		
@@ -86,36 +103,46 @@
 		}, false);
 
 		
+						
+		
 		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
 			
 
 			for (var i = 0; i < tableColumns; i++) {
 				for (var j = 0; j < tableRows; j++) {
 					
-					var newX =(i * tileWidth);
-					var newY=( j * tileHeight);
+					 newX =(j * tileWidth);
+					 newY=( i * tileHeight);
 					
 					
 					context.beginPath();
-					context.rect(newX ,newY, tileWidth, tileHeight);					
+					context.rect(newX ,newY, tileWidth, tileHeight);
+					
+										
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
-					
-					var test =${player1.getBord().giveVakje(i,j).isBevatBoot()};
-					if(test==true){
-						context.fillStyle="red";
-						context.fill;
-					}
+
 					context.stroke();
 					
-					
+					if(botenArray[j*${dimensionX}+i]===true){
+						drawBoats(newX,newY,tileWidth,tileHeight);}
+					}
 					
 					startPositionsOfTilesX.push(newX);
 					startPositionsOfTilesY.push(newY);
 					
 				}
 			}
+		
+		
+		function drawBoats(){
+		context.beginPath();
+		context.fillStyle='#8ED6FF';
+		context.fillRect(newX ,newY, tileWidth, tileHeight);
+		context.stroke();
 		}
+		
+		
 
 	</script>
 </body>

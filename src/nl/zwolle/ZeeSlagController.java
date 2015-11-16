@@ -64,6 +64,7 @@ public class ZeeSlagController {
 	}
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
+<<<<<<< HEAD
 	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate,boolean orientation,int boatType){
 
 
@@ -91,6 +92,24 @@ public class ZeeSlagController {
 
 	@RequestMapping("/waitingRoomHost")
 	public String HostGame(Model model, HttpSession session) {
+=======
+	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
+		
+		
+		
+		session.setAttribute("type"+boatType, boatType);
+		
+		System.out.println(xCoordinate+" "+yCoordinate);
+		int x = xCoordinate;
+		int y = yCoordinate;
+		
+		Speler player = (Speler) session.getAttribute("player1");
+		player.nieuweBoot(x, y, orientation, boatType);
+		
+		//System.out.println(player.getBord().toString(true));
+		
+		
+>>>>>>> 6685e5166b85fd2ea8467ce23b8e2b059851239e
 		
 		
 	

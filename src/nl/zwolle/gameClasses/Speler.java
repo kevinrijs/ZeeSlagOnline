@@ -157,8 +157,10 @@ public class Speler {
 
 			bootArray.add(nieuwBoot);
 			hoeveelheidBoten++;
+			
 			return true;
 		}
+		
 		return false;
 	}
 

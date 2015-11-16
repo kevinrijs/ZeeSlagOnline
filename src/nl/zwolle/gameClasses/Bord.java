@@ -81,7 +81,7 @@ public class Bord {
 		for (int i = 0; i < x*y; i++) {
 			vakjeArray.add(new Vakje());
 		}
-
+		
 	}
 
 	// kijk of de coordinaat geldig is, dus binnen de het veld valt.
@@ -131,7 +131,10 @@ public class Bord {
 			for (int j = -1; j <= 1; j++) {
 
 				if (checkGeldigheidCoordinaten(x+i, y+j) && !(i + j == 0) && !(i == j)) {
-					if (giveVakje(i+1,j+1).isBevatBoot()) {
+					
+					
+					if (giveVakje(x+i,y+j).isBevatBoot()) {
+						
 						resultaat = true;
 					}
 

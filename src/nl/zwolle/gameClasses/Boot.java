@@ -247,9 +247,11 @@ public class Boot {
 				for (int iy = yMin; iy <= yMax; iy++) {
 
 					b.giveVakje(ix,iy).setBevatBoot(true, this);
+					System.out.println("vakje gevuld: "+ ix +" "+ iy);
 
 				}
 			}
+			
 			return true;
 		}
 		return false;
