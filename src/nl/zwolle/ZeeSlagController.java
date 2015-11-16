@@ -44,7 +44,7 @@ public class ZeeSlagController {
 		Speler player1 = new Speler(name, dimensionX, dimensionY);
 		player1.setHoeveelheidBoten(boats);
 
-		
+
 		if(opponent.equals("computer")){
 
 			Speler ai = new Computer(dimensionX, dimensionY);
@@ -52,8 +52,8 @@ public class ZeeSlagController {
 
 			return "placeBoats";
 		}
-		
-		
+
+
 		session.setAttribute("player1",ZeeSlagDOA.saveSpeler(player1));
 		List<Speler> gameList = ZeeSlagDOA.hosts();
 		model.addAttribute("gameList", gameList);
@@ -63,8 +63,83 @@ public class ZeeSlagController {
 
 	}
 
+
+	@RequestMapping("/waitingRoomHost")
+	public String HostGame(Model model, HttpSession session) {
+
+
+		// verander status speler, in database en daarna in session.
+
+		Speler tempSpeler = (Speler)session.getAttribute("player1");
+
+		tempSpeler.setHost(true);
+
+		session.setAttribute("player1", ZeeSlagDOA.updateSpeler(tempSpeler));
+
+
+		// haal nieuwe lijst op en zet hem in n
+		List<Speler> gameList = ZeeSlagDOA.hosts();
+		model.addAttribute("gameList", gameList);
+
+		return "waitingRoom";
+
+
+	}
+
+	@RequestMapping("/waitingRoomJoin")
+	public String joinGame(Model model, HttpSession session, int opponent ) {
+
+		if(opponent != 0){
+
+
+
+			//TODO kijk of speler en opponent niet al coupled is
+			
+			//zet tegenstander voor huidige speler
+			Speler tempSpeler = (Speler)session.getAttribute("player1");
+			tempSpeler.setCoupled(true);
+			tempSpeler.setOpponentId(opponent);
+
+			//zet deze speler als tegenstander de opponent
+			Speler tempSpeler2 = ZeeSlagDOA.find(opponent);
+			tempSpeler2.setCoupled(true);
+			tempSpeler2.setOpponentId(((Speler)session.getAttribute("player1")).getId());
+
+			//scrijf beide spelers weg naar database
+			ZeeSlagDOA.updateSpeler(tempSpeler);
+			ZeeSlagDOA.updateSpeler(tempSpeler2);
+
+
+		}
+
+		return "placeBoats";
+
+
+	}
+
+	@RequestMapping("/waitingRoomRefresh")
+	public String refreshGame(Model model, HttpSession session) {
+
+		// kijk if coupled en stuur door
+		Speler tempSpeler = (Speler)session.getAttribute("player1");
+
+
+		Speler tempSpeler2 = ZeeSlagDOA.find(tempSpeler.getId());
+		if (tempSpeler2.isCoupled() && tempSpeler2.getOpponentId()!=-1){
+			return "placeBoats";
+		}
+
+
+
+		//anders terug naar waitingroom
+		return "waitingRoom";
+
+	}
+	
+	
+	//BASTIAAN, mergen ging niet helemaal lekker denk. hieronder jouw 2? controllers. klopt dit?
+
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
-<<<<<<< HEAD
 	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate,boolean orientation,int boatType){
 
 
@@ -88,98 +163,25 @@ public class ZeeSlagController {
 
 	}
 
-
-
-	@RequestMapping("/waitingRoomHost")
-	public String HostGame(Model model, HttpSession session) {
-=======
 	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
-		
-		
-		
+
+
+
 		session.setAttribute("type"+boatType, boatType);
-		
+
 		System.out.println(xCoordinate+" "+yCoordinate);
 		int x = xCoordinate;
 		int y = yCoordinate;
-		
+
 		Speler player = (Speler) session.getAttribute("player1");
 		player.nieuweBoot(x, y, orientation, boatType);
-		
+
+
+		return null;
+
 		//System.out.println(player.getBord().toString(true));
-		
-		
->>>>>>> 6685e5166b85fd2ea8467ce23b8e2b059851239e
-		
-		
-	
-		
-		// verander status speler, in database en daarna in session.
-	
-		Speler tempSpeler = (Speler)session.getAttribute("player1");
-		
-		tempSpeler.setHost(true);
-	
-		session.setAttribute("player1", ZeeSlagDOA.updateSpeler(tempSpeler));
-		
-		
-		// haal nieuwe lijst op en zet hem in n
-		List<Speler> gameList = ZeeSlagDOA.hosts();
-		model.addAttribute("gameList", gameList);
-		
-		return "waitingRoom";
-		
-	
+
+
 	}
-	
-	@RequestMapping("/waitingRoomJoin")
-	public String joinGame(Model model, HttpSession session, int opponent ) {
-		
-		if(opponent != 0){
-			
-		
-		
-		//zet tegenstander voor huidige speler
-		Speler tempSpeler = (Speler)session.getAttribute("player1");
-		tempSpeler.setCoupled(true);
-		tempSpeler.setOpponentId(opponent);
-		
-		//zet deze speler als tegenstander de opponent
-		Speler tempSpeler2 = ZeeSlagDOA.find(opponent);
-		tempSpeler2.setCoupled(true);
-		tempSpeler2.setOpponentId(((Speler)session.getAttribute("player1")).getId());
-		
-		//scrijf beide spelers weg naar database
-		ZeeSlagDOA.updateSpeler(tempSpeler);
-		ZeeSlagDOA.updateSpeler(tempSpeler2);
-	
-		
-		}
-		
-		return "placeBoats";
-		
-		
-	}
-	@RequestMapping("/waitingRoomRefresh")
-	public String joinGame(Model model, HttpSession session) {
-		
-		// kijk if coupled
-		Speler tempSpeler = (Speler)session.getAttribute("player1");
-		
-		
-		Speler tempSpeler2 = ZeeSlagDOA.find(tempSpeler.getId());
-		if (tempSpeler2.isCoupled() && tempSpeler2.getOpponentId()!=-1){
-			return "placeBoats";
-		}
-	
-		
-		
-		return "waitingRoom";
-		
-	}
-
-
-
-
 
 }
