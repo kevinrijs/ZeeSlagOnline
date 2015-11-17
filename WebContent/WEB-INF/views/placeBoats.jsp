@@ -97,15 +97,16 @@
 					
 					
 					context.beginPath();
-					context.rect(newX ,newY, tileWidth, tileHeight);					
+					context.rect(newX ,newY, tileWidth, tileHeight);	
+					var test =${player1.getBord().giveVakje(i,j).isBevatBoot()};
+					if(test){
+						context.fillStyle = '#8ED6FF'
+						context.fill;
+					}				
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
 					
-					var test =${player1.getBord().giveVakje(i,j).isBevatBoot()};
-					if(test==true){
-						context.fillStyle="red";
-						context.fill;
-					}
+					
 					context.stroke();
 					
 					
