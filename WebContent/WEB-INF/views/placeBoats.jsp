@@ -62,20 +62,7 @@
 		</c:forEach>
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
-		
-		
-		$(document).ready(function(){$('.boat')
-		})
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 
 		<!-- Takes care of the onclick event on the board-->
 		function onClick(evt) { 

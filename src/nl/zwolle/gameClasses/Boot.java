@@ -153,8 +153,10 @@ public class Boot {
 
 	// Constructor die de lengte vanuit de Type Enum op de lengte van het boot
 	// object set.
+	public Boot(){}
 	public Boot(int bootType) {
-		setType(bootType);
+		type=bootType;
+		
 
 		switch (bootType) {
 

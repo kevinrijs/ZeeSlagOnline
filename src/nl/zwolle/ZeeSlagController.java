@@ -186,8 +186,9 @@ public class ZeeSlagController {
 		int y = yCoordinate;
 
 		Speler player = (Speler) session.getAttribute("player1");
-		player.nieuweBoot(x, y, orientation, boatType);
 		
+		player.nieuweBoot(x, y, orientation, boatType);
+		session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
 
 
 		return "placeBoats";
