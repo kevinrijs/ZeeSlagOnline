@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 
 
 public class Computer extends Speler {
+	
 
 	boolean shotSucceeded = false;
 	int hitCoordinateX = -1;

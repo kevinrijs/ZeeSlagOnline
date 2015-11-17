@@ -30,6 +30,36 @@ public class Speler {
 	protected Bord bord;
 	protected List<Boot> bootArray= new ArrayList<Boot>();
 	protected int hoeveelheidBoten = 0;
+	protected boolean  host = false;
+	protected boolean  coupled = false;
+	protected int opponentId = -1;
+	
+
+	
+
+	public int getOpponentId() {
+		return opponentId;
+	}
+
+	public void setOpponentId(int opponentId) {
+		this.opponentId = opponentId;
+	}
+
+	public boolean isCoupled() {
+		return coupled;
+	}
+
+	public void setCoupled(boolean coupled) {
+		this.coupled = coupled;
+	}
+
+	public boolean isHost() {
+		return host;
+	}
+
+	public void setHost(boolean host) {
+		this.host = host;
+	}
 
 	// Overloaded constructors met standaard waarden: Naam=AI, x=10, y=10
 	// (grootte van het bord)
@@ -62,7 +92,7 @@ public class Speler {
 	
 	
 	//getters setters
-	@OneToMany(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
+	@OneToMany(cascade = CascadeType.ALL)
 	//@JoinColumn(name="SPELER_ID")
 	public List<Boot> getBootArray() {
 		return bootArray;
@@ -149,6 +179,7 @@ public class Speler {
 			return true;
 		}
 		return false;
+		
 	}
 
 }

@@ -11,6 +11,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Vakje {
 	
+	
+	
 	private int id;
 	@Id
 	@GeneratedValue(generator="increment")

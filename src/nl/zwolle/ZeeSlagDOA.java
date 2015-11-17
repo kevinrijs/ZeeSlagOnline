@@ -7,9 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import nl.zwolle.gameClasses.Apples;
-import nl.zwolle.gameClasses.Speler;
 
+import nl.zwolle.gameClasses.Speler;
 
 
 
@@ -66,6 +65,20 @@ public class ZeeSlagDOA {
 	/**
 	 * Haal alle ritten op uit de database
 	 */
+	public static List<Speler> hosts(){
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		List<Speler> spelers = em.createQuery("from Speler s where s.host is true and s.coupled is false", Speler.class).getResultList();
+		t.commit();
+		em.close();
+		return spelers;
+	}
+
+	
+	/**
+	 * Haal alle ritten op uit de database
+	 */
 	public static List<Speler> all(){
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction t = em.getTransaction();
@@ -88,6 +101,17 @@ public class ZeeSlagDOA {
 		return player;
 	}
 
+	public static Speler updateSpeler(Speler player){
+		
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		em.merge(player);
+		t.commit();
+		em.close();
+
+		return player;
+	}
 
 
 

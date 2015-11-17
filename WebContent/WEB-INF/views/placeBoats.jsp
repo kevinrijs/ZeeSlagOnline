@@ -28,16 +28,16 @@
 	<input id="patrolboat" type="radio" name="boatType" value = "4" checked>Patrol boat
 	
 	</form:form>
-	<canvas id="myCanvas" width="${dimensionX*1000}"
-		height="${dimensionY*1000}"></canvas>
+	<canvas id="myCanvas" width="${player1.bord.bordBreedte*1000}}"
+		height="${player1.bord.bordLengte*1000}"></canvas>
 		
 
 
 
 
 	<script>
-		var tableColumns = ${dimensionX};
-		var tableRows = ${dimensionY};
+		var tableColumns = ${player1.bord.bordBreedte};
+		var tableRows = ${player1.bord.bordLengte};
 
 		var canvas = document.getElementById('myCanvas');
 		var context = canvas.getContext('2d');
@@ -47,21 +47,20 @@
 		var tileHeight = 50;
 		
 		var botenArray = [];	
-		<c:forEach var="vakje" items="${player1.getBord().getVakjeArray()}">
-				botenArray.push(${vakje.isBevatBoot()});
+		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
+				botenArray.push(${vakje.bevatBoot});
 		</c:forEach> 
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
 		
 		
-		<!-- function hideClickedButtons(){
-		if(${boatType0} ===0){$('#aircraftcarrier').hide(400);
-		}
+		function hideClickedButtons(){
 		
 		
+		
 		}
-		-->
+		
 		
 		
 		
@@ -124,7 +123,7 @@
 
 					context.stroke();
 					
-					if(botenArray[j*${dimensionX}+i]===true){
+					if(botenArray[j*${player1.bord.bordBreedte}+i]===true){
 						drawBoats(newX,newY,tileWidth,tileHeight);}
 					}
 					
