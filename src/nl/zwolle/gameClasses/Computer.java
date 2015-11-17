@@ -21,7 +21,7 @@ public class Computer extends Speler {
 
 	//constructor
 	public Computer(int xCoordinaat, int yCoordinaat) {
-		bord = new Bord(xCoordinaat, yCoordinaat);
+		this.bord = new Bord(xCoordinaat, yCoordinaat);
 
 	}
 

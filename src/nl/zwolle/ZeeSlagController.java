@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,7 +41,7 @@ public class ZeeSlagController {
 
 		if(opponent.equals("computer")){
 
-			Speler ai = new Computer(dimensionX, dimensionY);
+			Computer ai = new Computer(dimensionX, dimensionY);
 			session.setAttribute("player1", player1);
 			session.setAttribute("player2", ai);
 
@@ -203,9 +204,11 @@ public class ZeeSlagController {
 
 	
 
-	@RequestMapping(value="/shoot", method = RequestMethod.POST)
-	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
+	@RequestMapping(value="/shoot/{x},{y}", method = RequestMethod.POST)
+	public @ResponseBody void shootMethod(Model model, HttpSession session, @PathVariable Integer x,@PathVariable Integer y) {
 
+		/*x=1;
+		y=1;*/
 		
 		//haal speler sessie op
 		Speler player1 = (Speler) session.getAttribute("player1");
@@ -213,14 +216,14 @@ public class ZeeSlagController {
 			// als computer is tegenstander
 		if (session.getAttribute("player2") != null){
 			//haal ai op
-			Computer ai = (Computer) session.getAttribute("player2");
+			Speler ai = (Computer) session.getAttribute("player2");
 			
 			//shiet op bord computer check if gelukt
 			
 			if(player1.schietOpVakje(ai.getBord(), x, y)){
 				//zoja, computer schiet op jou, sla beide op in session
 				
-				ai.schietOpVakje(player1.getBord());
+				
 				
 				session.setAttribute("player1", player1);
 				session.setAttribute("player2", ai);

@@ -6,7 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
 <title>Game Room</title>
 </head>
 <body>
@@ -20,6 +23,17 @@
 
 
 <script>
+		// configureer JQuery om csrf-token mee te sturen
+		var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+		var csrfToken = $("meta[name='_csrf']").attr("content");
+		$(function () {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function(e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+		});
 
 		var tableColumns = ${player1.bord.bordBreedte};
 		var tableRows = ${player1.bord.bordLengte};
@@ -123,7 +137,9 @@
 			
 			if(x<tableColumns&&y<tableRows){
 			
-			$.post('/ZeeslagOnline/ZeeSlagController/shoot',x,y);
+			$.post('shoot'+x+y);
+			
+			
 			}
 			else{
 			alert('You clicked outside of the field')}
