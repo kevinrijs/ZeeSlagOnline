@@ -3,6 +3,8 @@ package nl.zwolle.gameClasses;
 import javax.persistence.Entity;
 
 
+
+
 public class Computer extends Speler {
 	
 
@@ -23,6 +25,40 @@ public class Computer extends Speler {
 
 	}
 
+	
+	public void computerPlaatstBoten(int hoeveelheidBoten, int maxBordX, int maxBordY) {
+		int x = 0;
+		int y = 0;
+		int richting = 0;
+		boolean ligging = false;
+
+		for (int i = 0; i < hoeveelheidBoten; i++) {
+
+			while (true) {
+				x = (int) (Math.random() * maxBordX);
+				y = (int) (Math.random() * maxBordY);
+				richting = (int) (Math.random() * 2);
+
+				
+				switch (richting) {
+				case 0:
+					ligging = true;
+					break;
+				case 1:
+					ligging = false;
+					break;
+				}
+				
+				
+				if (nieuweBoot(x, y, ligging, i)) {
+					System.out.println(bord.toString(true));
+					break;
+				} 
+			}
+		}
+	}
+	
+	
 	// overloaded method from Speler
 	public void schietOpVakje(Bord b) {
 

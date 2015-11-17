@@ -181,8 +181,13 @@ public class ZeeSlagController {
 		Speler player = (Speler) session.getAttribute("player1");
 		
 		player.nieuweBoot(x, y, orientation, boatType);
+		
+		if (session.getAttribute("player2") != null){
 		session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
-
+		}else{
+			((Computer)session.getAttribute("player2")).computerPlaatstBoten(1, player.getBord().getBordBreedte(), player.getBord().getBordLengte());
+			session.setAttribute("player1", player);
+		}
 
 		return "placeBoats";
 
@@ -198,7 +203,7 @@ public class ZeeSlagController {
 //		return demo;
 //	}
 	
-	@RequestMapping("/shoot")
+	@RequestMapping(value="/shoot", method = RequestMethod.POST)
 	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
 		
 		//haal speler sessie op
@@ -213,6 +218,9 @@ public class ZeeSlagController {
 			
 			if(player1.schietOpVakje(ai.getBord(), x, y)){
 				//zoja, computer schiet op jou, sla beide op in session
+				
+				ai.schietOpVakje(player1.getBord());
+				
 				session.setAttribute("player1", player1);
 				session.setAttribute("player2", ai);
 				
