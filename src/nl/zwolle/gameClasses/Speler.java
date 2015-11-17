@@ -32,10 +32,19 @@ public class Speler {
 	protected int hoeveelheidBoten = 0;
 	protected boolean  host = false;
 	protected boolean  coupled = false;
+	protected boolean  hisTurn = false;
 	protected int opponentId = -1;
 	
 
 	
+
+	public boolean isHisTurn() {
+		return hisTurn;
+	}
+
+	public void setHisTurn(boolean hisTurn) {
+		this.hisTurn = hisTurn;
+	}
 
 	public int getOpponentId() {
 		return opponentId;
@@ -121,7 +130,7 @@ public class Speler {
 	}
 
 	// als coordinaat geldig is en niet al eerder is beschoten, schiet
-	public void schietOpVakje(Bord bord, int x, int y) {
+	public boolean schietOpVakje(Bord bord, int x, int y) {
 
 		// user ingegeven coordinaten worden -1 geshift zodat ze in de array
 		// passen.
@@ -134,16 +143,20 @@ public class Speler {
 
 			if (bord.giveVakje(x,y).isBevatBoot()) {
 				System.out.println("Boem!");
+				
 				bord.giveVakje(x,y).boot.verliesLeven();
 				if (bord.giveVakje(x,y).boot.isDood()) {
 					System.out.println("Boot gezonken");
 				}
+				return true;
 
 			} else {
 				System.out.println("Plons");
+				return true;
 			}
 
 		}
+		return false;
 
 	}
 

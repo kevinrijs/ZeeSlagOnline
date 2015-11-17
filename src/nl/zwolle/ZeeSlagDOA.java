@@ -11,7 +11,6 @@ import javax.persistence.Persistence;
 import nl.zwolle.gameClasses.Speler;
 
 
-
 public class ZeeSlagDOA {
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("apples");

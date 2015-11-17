@@ -55,6 +55,9 @@ public class ZeeSlagController {
 		}
 
 
+		//computer leeg maken bij de multiplayer function
+		session.setAttribute("player2", null);
+		
 		session.setAttribute("player1",ZeeSlagDOA.saveSpeler(player1));
 		List<Speler> gameList = ZeeSlagDOA.hosts();
 		model.addAttribute("gameList", gameList);
@@ -88,16 +91,17 @@ public class ZeeSlagController {
 	}
 
 	@RequestMapping("/waitingRoomJoin")
-	public synchronized String joinGame(Model model, HttpSession session, int opponent ) {
+	public synchronized String joinGame(Model model, HttpSession session, Integer opponent ) {
 
 
 		//kijk of speler en opponent niet al coupled is EN als hij niet zichzelf is misschien join knop weghalen
 
 
+		if (opponent != null){
 		Speler tempSpeler = (Speler)session.getAttribute("player1");
 		Speler tempSpeler2 = ZeeSlagDOA.find(opponent);
 
-		if(opponent != 0 &&  opponent != tempSpeler.getId() && !tempSpeler2.isCoupled() && !tempSpeler.isCoupled()){
+		if(opponent != tempSpeler.getId() && !tempSpeler2.isCoupled() && !tempSpeler.isCoupled()){
 
 
 
@@ -110,15 +114,29 @@ public class ZeeSlagController {
 
 			tempSpeler2.setCoupled(true);
 			tempSpeler2.setOpponentId(((Speler)session.getAttribute("player1")).getId());
+			
+			//bepaal wie er begint:
+			
+			if(Math.random()< 0.50){
+				tempSpeler.setHisTurn(true);
+				tempSpeler2.setHisTurn(false);
+			}else{
+				tempSpeler2.setHisTurn(true);
+				tempSpeler.setHisTurn(false);
+			}
 
 			//schrijf beide spelers weg naar database en update session
 			session.setAttribute("player1", ZeeSlagDOA.updateSpeler(tempSpeler));
 			ZeeSlagDOA.updateSpeler(tempSpeler2);
+			
+			return "placeBoats";
 
+		}
+		
 		}
 		//TODO spelers meegeven
 
-		return "placeBoats";
+		return "waitingRoom";
 
 
 	}
@@ -156,7 +174,7 @@ public class ZeeSlagController {
 	}
 
 
-	//BASTIAAN, mergen ging niet helemaal lekker denk. hieronder jouw 2? controllers. klopt dit?
+
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
 	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
@@ -174,6 +192,67 @@ public class ZeeSlagController {
 
 		return "placeBoats";
 
+	}
+	@RequestMapping("/shoot")
+	public String shootMethod(Model model, HttpSession session, Integer x, Integer y) {
+		
+		//haal speler sessie op
+		Speler player1 = (Speler) session.getAttribute("player1");
+		
+			// als computer is tegenstander
+		if (session.getAttribute("player2") != null){
+			//haal ai op
+			Computer ai = (Computer) session.getAttribute("player2");
+			
+			//shiet op bord computer check if gelukt
+			
+			if(player1.schietOpVakje(ai.getBord(), x, y)){
+				//zoja, computer schiet op jou, sla beide op in session
+				session.setAttribute("player1", player1);
+				session.setAttribute("player2", ai);
+				
+			} else{
+				//TODO zonee, verkeerde input
+				
+			};
+			
+					
+			
+		}else{
+			
+				// anders: haal bord tegenstander op
+			
+			Speler opponent = ZeeSlagDOA.find(player1.getOpponentId());
+		
+					// schietopvakje bord tegenstander en kijk of het gelukt is, check coordinaten
+					
+					if(player1.schietOpVakje(opponent.getBord(), x, y)){
+						
+						// als wel , geef beurt aan opponent, geen beurt voor deze speler meer, kijk of opponent heeft verloren, 
+						// pas opponent en huidige speler  aan in de session en database
+		
+						opponent.setHisTurn(true);
+						player1.setHisTurn(false);
+						//TODO zet dit als voorwaarde in javascript opponent.spelerHeeftVerloren();
+						session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player1));
+						ZeeSlagDOA.updateSpeler(opponent);
+						//return true als gelukt is
+		
+					}else{
+						
+
+						// als niet return naar jsp
+						
+					}
+		
+		
+						
+		}
+		
+		return "spel";
+		
+		
+		
 	}
 
 	
