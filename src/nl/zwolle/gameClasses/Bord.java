@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Bord {
 	
+	
 	private int id;
 	@Id
 	//@Column(name="BORD_ID")
@@ -46,7 +47,7 @@ public class Bord {
 		this.bordBreedte = bordBreedte;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL}) // fetch=FetchType.LAZY
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch={FetchType.LAZY})
 	//@JoinColumn(name="BORD_ID")
 	public List<Vakje> getVakjeArray() {
 		return vakjeArray;
@@ -67,6 +68,10 @@ public class Bord {
 	
 
 	// bord constructor, maak bord dmv arraylist
+	public Bord(){
+		
+	}
+	
 	public Bord(int x, int y) {
 
 		this.bordBreedte = x;
@@ -77,7 +82,7 @@ public class Bord {
 		for (int i = 0; i < x*y; i++) {
 			vakjeArray.add(new Vakje());
 		}
-
+		
 	}
 
 	// kijk of de coordinaat geldig is, dus binnen de het veld valt.
@@ -127,7 +132,10 @@ public class Bord {
 			for (int j = -1; j <= 1; j++) {
 
 				if (checkGeldigheidCoordinaten(x+i, y+j) && !(i + j == 0) && !(i == j)) {
-					if (giveVakje(i+1,j+1).isBevatBoot()) {
+					
+					
+					if (giveVakje(x+i,y+j).isBevatBoot()) {
+						
 						resultaat = true;
 					}
 

@@ -30,6 +30,45 @@ public class Speler {
 	protected Bord bord;
 	protected List<Boot> bootArray= new ArrayList<Boot>();
 	protected int hoeveelheidBoten = 0;
+	protected boolean  host = false;
+	protected boolean  coupled = false;
+	protected boolean  hisTurn = false;
+	protected int opponentId = -1;
+	
+
+	
+
+	public boolean isHisTurn() {
+		return hisTurn;
+	}
+
+	public void setHisTurn(boolean hisTurn) {
+		this.hisTurn = hisTurn;
+	}
+
+	public int getOpponentId() {
+		return opponentId;
+	}
+
+	public void setOpponentId(int opponentId) {
+		this.opponentId = opponentId;
+	}
+
+	public boolean isCoupled() {
+		return coupled;
+	}
+
+	public void setCoupled(boolean coupled) {
+		this.coupled = coupled;
+	}
+
+	public boolean isHost() {
+		return host;
+	}
+
+	public void setHost(boolean host) {
+		this.host = host;
+	}
 
 	// Overloaded constructors met standaard waarden: Naam=AI, x=10, y=10
 	// (grootte van het bord)
@@ -49,7 +88,7 @@ public class Speler {
 	}
 	private int id;
 	@Id
-	@Column(name="SPELER_ID")
+	//@Column(name="SPELER_ID")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	public int getId() {
@@ -62,8 +101,8 @@ public class Speler {
 	
 	
 	//getters setters
-	@OneToMany(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
-	@JoinColumn(name="SPELER_ID")
+	@OneToMany(cascade = CascadeType.ALL)
+	//@JoinColumn(name="SPELER_ID")
 	public List<Boot> getBootArray() {
 		return bootArray;
 	}
@@ -81,7 +120,7 @@ public class Speler {
 	}
 	
 	@OneToOne(cascade = {CascadeType.ALL})  //fetch=FetchType.LAZY
-	@JoinColumn(name="SPELER_ID")
+	//@JoinColumn(name="SPELER_ID")
 	public Bord getBord() {
 		return bord;
 	}
@@ -91,7 +130,7 @@ public class Speler {
 	}
 
 	// als coordinaat geldig is en niet al eerder is beschoten, schiet
-	public void schietOpVakje(Bord bord, int x, int y) {
+	public boolean schietOpVakje(Bord bord, int x, int y) {
 
 		// user ingegeven coordinaten worden -1 geshift zodat ze in de array
 		// passen.
@@ -104,16 +143,20 @@ public class Speler {
 
 			if (bord.giveVakje(x,y).isBevatBoot()) {
 				System.out.println("Boem!");
+				
 				bord.giveVakje(x,y).boot.verliesLeven();
 				if (bord.giveVakje(x,y).boot.isDood()) {
 					System.out.println("Boot gezonken");
 				}
+				return true;
 
 			} else {
 				System.out.println("Plons");
+				return true;
 			}
 
 		}
+		return false;
 
 	}
 
@@ -127,8 +170,10 @@ public class Speler {
 
 			bootArray.add(nieuwBoot);
 			hoeveelheidBoten++;
+			
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -147,6 +192,7 @@ public class Speler {
 			return true;
 		}
 		return false;
+		
 	}
 
 }
