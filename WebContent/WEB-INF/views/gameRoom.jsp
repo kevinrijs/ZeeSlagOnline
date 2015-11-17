@@ -137,7 +137,10 @@
 			
 			if(x<tableColumns&&y<tableRows){
 			
-			$.post('shoot'+x+y);
+			$.post('shoot', {x:x, y:y}, 
+				function(){	drawFieldOwnBoard();
+							drawFieldOtherBoard();}
+					);
 			
 			
 			}
