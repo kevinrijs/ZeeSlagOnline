@@ -55,13 +55,13 @@
 		
 		
 		
-		function hideClickedButtons(){
+		<!-- function hideClickedButtons(){
 		if(${boatType0} ===0){$('#aircraftcarrier').hide(400);
 		}
 		
 		
 		}
-		
+		-->
 		
 		
 		

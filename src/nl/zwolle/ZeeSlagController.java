@@ -60,6 +60,7 @@ public class ZeeSlagController {
 			Speler ai = new Computer(dimensionX, dimensionY);
 			session.setAttribute("player2", ai);
 			
+			
 			return "placeBoats";
 		}
 		ZeeSlagDOA.saveSpeler(player1);
