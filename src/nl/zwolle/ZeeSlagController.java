@@ -169,6 +169,7 @@ public class ZeeSlagController {
 
 		Speler player = (Speler) session.getAttribute("player1");
 		player.nieuweBoot(x, y, orientation, boatType);
+		
 
 
 		return "placeBoats";

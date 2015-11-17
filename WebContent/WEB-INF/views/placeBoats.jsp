@@ -21,11 +21,17 @@
 	<br>
 	<input type="radio" name="orientation" value="true">Horizontal (right)
 	<h4>Select Boat</h4>
-	<input id="aircraftcarrier" type="radio" name="boatType" value = "0" >Aircraft Carrier
-	<input id="battleship" type="radio" name="boatType" value = "1">Battleship
-	<input id="submarine" type="radio" name="boatType" value = "2">Submarine
-	<input id="cruiser" type="radio" name="boatType" value = "3">Cruiser
-	<input id="patrolboat" type="radio" name="boatType" value = "4" checked>Patrol boat
+
+
+	
+	
+	<input class ="boat" id="aircraftcarrier" type="radio" name="boatType" value = "0" >Aircraft Carrier
+	<input class ="boat" id="battleship" type="radio" name="boatType" value = "1">Battleship
+	<input class ="boat" id="submarine" type="radio" name="boatType" value = "2">Submarine
+	<input class ="boat" id="cruiser" type="radio" name="boatType" value = "3">Cruiser
+	<input class ="boat" id="patrolboat" type="radio" name="boatType" value = "4" checked>Patrol boat
+	
+	
 	
 	</form:form>
 	<canvas id="myCanvas" width="${player1.bord.bordBreedte*1000}}"
@@ -50,16 +56,19 @@
 		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
 				botenArray.push(${vakje.bevatBoot});
 		</c:forEach> 
+		
+		<c:forEach var="boot" items ="${player1.bootArray}">
+		$('#${boot.naam}').hide();
+		</c:forEach>
 
 		drawField(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
 		
 		
+		$(document).ready(function(){$('.boat')
+		})
 		
-		function hideClickedButtons(){
 		
 		
-		
-		}
 		
 		
 		
@@ -68,7 +77,7 @@
 		
 		
 
-		
+		<!-- Takes care of the onclick event on the board-->
 		function onClick(evt) { 
 			var mousePosition = getMousePos(canvas, evt);
 			
@@ -85,8 +94,10 @@
 			alert('You clicked outside of the field')}
 
 		}
+		
 		canvas.onclick = onClick;
 
+		<!-- Returns the mouse position at the time of the click-->
 		function getMousePos(canvas, evt) {
 			var rect = canvas.getBoundingClientRect();
 			return {
@@ -103,7 +114,7 @@
 
 		
 						
-		
+		<!-- draws the field with the supplied dimensions-->
 		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
 			
 
@@ -116,8 +127,12 @@
 					
 					context.beginPath();
 					context.rect(newX ,newY, tileWidth, tileHeight);
-					
-										
+					var imageObj = new Image();
+					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					var pattern = context.createPattern(imageObj, 'repeat');
+					context.fillStyle = pattern;
+					context.fill();
+									
 					context.lineWith = 1;
 					context.strokeStyle = 'black';
 
@@ -133,10 +148,10 @@
 				}
 			}
 		
-		
+		<!-- fills the tiles where boats are located-->
 		function drawBoats(){
 		context.beginPath();
-		context.fillStyle='#8ED6FF';
+		context.fillStyle='red';
 		context.fillRect(newX ,newY, tileWidth, tileHeight);
 		context.stroke();
 		}

@@ -73,7 +73,7 @@ public class Boot {
 	public static final int TORPEDOJAGER = 3;
 	public static final int PATROUILLESHIP = 4;
 
-	public static String[] bootNamen = { "Vliegdekschip", "Slagschip", "Onderzeer", "Torpedojager", "Patrouilleship" };
+	public static String[] bootNamen = { "aircaftcarrier", "battleship", "submarine", "cruiser", "patrolboat" };
 	public static int[] bootLengten = {5, 4, 3, 3, 2};
 
 	// static variabelen
@@ -83,6 +83,8 @@ public class Boot {
 	private int levens;
 	private int lengte;
 	private boolean dood;
+	private int type;
+	private String naam = bootNamen[type];
 
 	private boolean ligging; // true = horizontaal, false = verticaal
 	private int id;
@@ -152,6 +154,7 @@ public class Boot {
 	// Constructor die de lengte vanuit de Type Enum op de lengte van het boot
 	// object set.
 	public Boot(int bootType) {
+		setType(bootType);
 
 		switch (bootType) {
 
@@ -179,6 +182,14 @@ public class Boot {
 	}
 
 	// getters en setters
+	public String getNaam() {
+		return naam;
+	}
+
+
+	public void setNaam(String naam) {
+		this.naam = naam;
+	}
 
 	public int getLengte() {
 		return lengte;
@@ -264,5 +275,18 @@ public class Boot {
 			dood = true;
 		}
 	}
+
+
+	public int getType() {
+		return type;
+	}
+
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+
+	
 
 }
