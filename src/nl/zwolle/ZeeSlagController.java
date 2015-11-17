@@ -166,7 +166,7 @@ public class ZeeSlagController {
 
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
-	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
+	public String processPlacedBoat(Model model,HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
 
 		session.setAttribute("type"+boatType, boatType);
 
@@ -179,19 +179,31 @@ public class ZeeSlagController {
 		player.nieuweBoot(x, y, orientation, boatType);
 
 		if (session.getAttribute("player2") != null){
+
 			session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
+
+
+
 		}else{
 			((Computer)session.getAttribute("player2")).computerPlaatstBoten(1, player.getBord().getBordBreedte(), player.getBord().getBordLengte());
 			session.setAttribute("player1", player);
 		}
 
-		return "placeBoats";
+		if(player.getBootArray().size() ==1){
+			return "gameRoom";
+
+		}else{
+
+
+			return "placeBoats";}
+
 
 	}
 
 
 	@RequestMapping(value="/shoot", method = RequestMethod.POST)
 	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
+
 
 		//haal speler sessie op
 		Speler player1 = (Speler) session.getAttribute("player1");
@@ -212,11 +224,13 @@ public class ZeeSlagController {
 				session.setAttribute("player2", ai);
 
 			} else{
-				//TODO zonee, verkeerde input
+
+				model.addAttribute("error", "You clicked on a square that already contained a boat, please try again");
+
 
 			};
 
-			
+
 		}else{
 
 			// anders: haal bord tegenstander op
@@ -246,7 +260,11 @@ public class ZeeSlagController {
 
 		}
 
+
 		return player1;
+
+
+
 
 	}
 

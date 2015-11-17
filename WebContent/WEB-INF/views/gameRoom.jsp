@@ -6,14 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <title>Game Room</title>
 </head>
 <body>
-<canvas id="canvasOwn" width="${player1.bord.bordBreedte*1000}}"
-		height="${player1.bord.bordLengte*1000}"></canvas>
-<canvas id="canvasOther" width="${player1.bord.bordBreedte*1000}}"
-		height="${player1.bord.bordLengte*1000}"></canvas>
-		
+<div>
+<canvas id="canvasOwn" width="${player1.bord.bordBreedte*30}}"
+		height="${player1.bord.bordLengte*30}"></canvas>
+		</div><div>
+<canvas id="canvasOther" width="${player1.bord.bordBreedte*50}}"
+		height="${player1.bord.bordLengte*50}"></canvas>
+		</div>
+
 
 <script>
 
@@ -22,31 +26,65 @@
 
 		var canvas = document.getElementById('canvasOwn');
 		var context = canvas.getContext('2d');
+		var canvas1 = document.getElementById('canvasOther');
+		var context1 = canvas1.getContext('2d');
+		
 		var startPositionsOfTilesX = [];
 		var startPositionsOfTilesY = [];
-		var tileWidth = 50;
-		var tileHeight = 50;
+		var tileWidthOwnBoard = 30;
+		var tileHeightOwnBoard = 30;
+		var tileWidthOtherBoard = 50;
+		var tileHeightOtherBoard = 50;
+		var botenArray = [];	
+		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
+				botenArray.push(${vakje.bevatBoot});
+		</c:forEach>
 		
-		var canvas1 = document.getElementById('canvasOther');
 		
 		
-		drawFieldOwnBoard(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
-		drawFieldOtherBoard
+		
+		
+		drawFieldOwnBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
+		drawFieldOtherBoard(context1,tableColumns,tableRows);
+		
+		function drawFieldOtherBoard(context1, tableColumns, tableRows){
+		
+		
+		for (var i = 0; i < tableColumns; i++) {
+				for (var j = 0; j < tableRows; j++) {
+					var newX =(j * tileWidthOtherBoard);
+					var newY=( i * tileHeightOtherBoard);
+					
+					context1.beginPath();
+					context1.rect(newX ,newY, tileWidthOtherBoard, tileHeightOtherBoard);
+					var imageObj = new Image();
+					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					var pattern = context.createPattern(imageObj, 'repeat');
+					context1.fillStyle = pattern;
+					context1.fill();
+									
+					context1.lineWith = 1;
+					context1.strokeStyle = 'black';
+
+					context1.stroke();
+					
+				}}
+		}
 		
 
 			<!-- draws the field with the supplied dimensions-->
-		function drawFieldOwnBoard(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+		function drawFieldOwnBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
 			
 
 			for (var i = 0; i < tableColumns; i++) {
 				for (var j = 0; j < tableRows; j++) {
 					
-					 newX =(j * tileWidth);
-					 newY=( i * tileHeight);
+					var newX1 =(j * tileWidthOwnBoard);
+					var newY1=( i * tileHeightOwnBoard);
 					
 					
 					context.beginPath();
-					context.rect(newX ,newY, tileWidth, tileHeight);
+					context.rect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
 					var imageObj = new Image();
 					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
 					var pattern = context.createPattern(imageObj, 'repeat');
@@ -59,54 +97,52 @@
 					context.stroke();
 					
 					if(botenArray[j*${player1.bord.bordBreedte}+i]===true){
-						drawBoats(newX,newY,tileWidth,tileHeight);}
+						drawBoats(newX1,newY1,tileWidthOwnBoard,tileHeightOwnBoard);}
 					}
 					
-					startPositionsOfTilesX.push(newX);
-					startPositionsOfTilesY.push(newY);
+					startPositionsOfTilesX.push(newX1);
+					startPositionsOfTilesY.push(newY1);
 					
 				}
 			}
 			
 				<!-- fills the tiles where boats are located-->
-		function drawBoats(){
+		function drawBoats(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard){
 		context.beginPath();
 		context.fillStyle='red';
-		context.fillRect(newX ,newY, tileWidth, tileHeight);
+		context.fillRect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
 		context.stroke();
 		}
 		
 			<!-- Takes care of the onclick event on the board-->
 		function onClick(evt) { 
-			var mousePosition = getMousePos(canvas, evt);
+			var mousePosition = getMousePos(canvas1, evt);
 			
-			var x = Math.floor(mousePosition.x/tileWidth);
-			var y = Math.floor(mousePosition.y/tileHeight);
+			var x = Math.floor(mousePosition.x/tileWidthOtherBoard);
+			var y = Math.floor(mousePosition.y/tileHeightOtherBoard);
 			
 			if(x<tableColumns&&y<tableRows){
 			
-			$('#xCoordinate').val(x);
-			$('#yCoordinate').val(y);
-			$('form').submit();
+			$.post('/ZeeslagOnline/ZeeSlagController/shoot',x,y);
 			}
 			else{
 			alert('You clicked outside of the field')}
 
 		}
 		
-		canvas.onclick = onClick;
+		canvas1.onclick = onClick;
 
 		<!-- Returns the mouse position at the time of the click-->
-		function getMousePos(canvas, evt) {
-			var rect = canvas.getBoundingClientRect();
+		function getMousePos(canvas1, evt) {
+			var rect = canvas1.getBoundingClientRect();
 			return {
 				x : evt.clientX - rect.left,
 				y : evt.clientY - rect.top
 			};
 		}
 
-		canvas.addEventListener('mousemove', function(evt) {
-			var mousePos = getMousePos(canvas, evt);
+		canvas1.addEventListener('mousemove', function(evt) {
+			var mousePos = getMousePos(canvas1, evt);
 			var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
 
 		}, false);
