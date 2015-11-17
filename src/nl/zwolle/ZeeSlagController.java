@@ -170,7 +170,7 @@ public class ZeeSlagController {
 
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
-	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
+	public String processPlacedBoat(Model model,HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
 
 		session.setAttribute("type"+boatType, boatType);
 
@@ -180,11 +180,13 @@ public class ZeeSlagController {
 
 		Speler player = (Speler) session.getAttribute("player1");
 		
+		
 		player.nieuweBoot(x, y, orientation, boatType);
 		session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
 
-
-		return "placeBoats";
+		if(player.getBootArray().size() ==1){return "gameRoom";}
+		else{return "placeBoats";}
+		
 
 	}
 	
@@ -199,7 +201,7 @@ public class ZeeSlagController {
 //	}
 	
 	@RequestMapping("/shoot")
-	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
+	public @ResponseBody void shootMethod(Model model, HttpSession session, Integer x, Integer y) {
 		
 		//haal speler sessie op
 		Speler player1 = (Speler) session.getAttribute("player1");
@@ -217,7 +219,7 @@ public class ZeeSlagController {
 				session.setAttribute("player2", ai);
 				
 			} else{
-				//TODO zonee, verkeerde input
+				model.addAttribute("error", "You clicked on a square that already contained a boat, please try again");
 				
 			};
 			
@@ -254,7 +256,7 @@ public class ZeeSlagController {
 						
 		}
 		
-		return player1;
+		
 		
 		
 		
