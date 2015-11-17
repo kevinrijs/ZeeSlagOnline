@@ -159,34 +159,7 @@ public class ZeeSlagController {
 	//BASTIAAN, mergen ging niet helemaal lekker denk. hieronder jouw 2? controllers. klopt dit?
 
 	@RequestMapping(value="/placeBoats", method=RequestMethod.POST)
-	public String processPlacedBoat(HttpSession session, String xCoordinate,String yCoordinate,boolean orientation,int boatType){
-
-
-
-		
-		Speler player= (Speler) session.getAttribute("player1");
-		int dimensionX =(player.getBord().getBordBreedte());
-		int dimensionY =(player.getBord().getBordLengte());
-
-		System.out.println(xCoordinate+" "+yCoordinate);
-		int x = Integer.parseInt(xCoordinate);
-		int y = Integer.parseInt(yCoordinate);
-
-		
-		player.nieuweBoot(x, y, orientation, boatType);
-
-		System.out.println(player.getBord().toString(true));
-
-
-
-
-		return "placeBoats";
-
-	}
-
 	public String processPlacedBoat(HttpSession session, int xCoordinate,int yCoordinate,boolean orientation,int boatType){
-
-
 
 		session.setAttribute("type"+boatType, boatType);
 
@@ -200,9 +173,8 @@ public class ZeeSlagController {
 
 		return "placeBoats";
 
-		//System.out.println(player.getBord().toString(true));
-
-
 	}
+
+	
 
 }
