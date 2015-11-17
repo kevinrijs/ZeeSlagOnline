@@ -55,6 +55,9 @@ public class ZeeSlagController {
 		}
 
 
+		//computer leeg maken bij de multiplayer function
+		session.setAttribute("player2", null);
+		
 		session.setAttribute("player1",ZeeSlagDOA.saveSpeler(player1));
 		List<Speler> gameList = ZeeSlagDOA.hosts();
 		model.addAttribute("gameList", gameList);
@@ -114,11 +117,13 @@ public class ZeeSlagController {
 			//schrijf beide spelers weg naar database en update session
 			session.setAttribute("player1", ZeeSlagDOA.updateSpeler(tempSpeler));
 			ZeeSlagDOA.updateSpeler(tempSpeler2);
+			
+			return "placeBoats";
 
 		}
 		//TODO spelers meegeven
 
-		return "placeBoats";
+		return "waitingRoom";
 
 
 	}

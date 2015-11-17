@@ -41,12 +41,16 @@ Waiting for a Human opponent to kick your ass...
 </table>
 
 <a href ="<c:url value="/" />"	>  <button type="button">Back</button></a>
+
+
 <input type="submit" value="Join Game">
+
+
 </form:form>
 
 
 <form:form method="post" action="waitingRoomHost" >
-<input type="submit" value="Host Game">
+<input id= "host" type="submit" value="Host Game">
 </form:form>
 
 
@@ -57,7 +61,9 @@ if(${player1.host}){
 setTimeout(function(){window.location.href='<c:url value="/waitingRoomRefresh" />'},5000);
 }
 
-
+if(${player1.host}){
+$("#host").type('hidden');
+}
 
 </script>  
 
