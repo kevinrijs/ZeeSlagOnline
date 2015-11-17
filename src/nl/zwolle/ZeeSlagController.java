@@ -1,21 +1,14 @@
 package nl.zwolle;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-
-import nl.zwolle.gameClasses.Boot;
 import nl.zwolle.gameClasses.Computer;
 import nl.zwolle.gameClasses.Speler;
 
@@ -192,8 +185,19 @@ public class ZeeSlagController {
 		return "placeBoats";
 
 	}
+	
+	
+//	@RequestMapping("/demo")
+//	public @ResponseBody Speler demo(){
+//		Speler demo = new Speler();
+//		demo.setNaam("reindert");
+//		demo.setOpponentId(235236146);
+//		demo.setHisTurn(true);
+//		return demo;
+//	}
+	
 	@RequestMapping("/shoot")
-	public String shootMethod(Model model, HttpSession session, Integer x, Integer y) {
+	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
 		
 		//haal speler sessie op
 		Speler player1 = (Speler) session.getAttribute("player1");
@@ -248,7 +252,7 @@ public class ZeeSlagController {
 						
 		}
 		
-		return "spel";
+		return player1;
 		
 		
 		
