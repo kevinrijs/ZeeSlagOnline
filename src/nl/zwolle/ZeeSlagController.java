@@ -178,9 +178,10 @@ public class ZeeSlagController {
 
 		player.nieuweBoot(x, y, orientation, boatType);
 
-		if (session.getAttribute("player2") != null){
+		if (session.getAttribute("player2") == null){ // player2=computer
 
 			session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
+			
 
 
 
@@ -190,6 +191,9 @@ public class ZeeSlagController {
 		}
 
 		if(player.getBootArray().size() >=3){
+			
+			//todo while loop totdat speler zijn boten heeft geplaatst.
+			session.setAttribute("opponent", ZeeSlagDOA.find(player.getOpponentId()));
 			return "gameRoom";
 
 		}else{

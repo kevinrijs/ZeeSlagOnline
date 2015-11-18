@@ -49,7 +49,16 @@
 		var tileHeightOwnBoard = 30;
 		var tileWidthOtherBoard = 50;
 		var tileHeightOtherBoard = 50;
+		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
+		
+		var botenArrayOther = [];
+		<c:forEach var="vakje" items="${opponent.bord.vakjeArray}"> 
+				botenArrayOther.push(${vakje.bevatBoot});
+		</c:forEach>
+		
+		
 		var botenArray = [];	
+		
 		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
 				botenArray.push(${vakje.bevatBoot});
 		</c:forEach>
@@ -72,18 +81,24 @@
 					context1.beginPath();
 					context1.rect(newX ,newY, tileWidthOtherBoard, tileHeightOtherBoard);
 					var imageObj = new Image();
-					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					imageObj.src =backgroundSource;
 					var pattern = context.createPattern(imageObj, 'repeat');
 					context1.fillStyle = pattern;
 					context1.fill();
 									
+									if(botenArrayOther[j*${player1.bord.bordBreedte}+i]===true){
+						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);}
+					}
+					
 					context1.lineWith = 1;
 					context1.strokeStyle = 'black';
 
 					context1.stroke();
 					
 				}}
-		}
+		
+		
+		
 		
 
 			<!-- draws the field with the supplied dimensions-->
@@ -100,7 +115,7 @@
 					context.beginPath();
 					context.rect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
 					var imageObj = new Image();
-					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					imageObj.src = backgroundSource;
 					var pattern = context.createPattern(imageObj, 'repeat');
 					context.fillStyle = pattern;
 					context.fill();
@@ -110,9 +125,9 @@
 
 					context.stroke();
 					
-					if(botenArray[j*${player1.bord.bordBreedte}+i]===true){
-						drawBoats(newX1,newY1,tileWidthOwnBoard,tileHeightOwnBoard);}
-					}
+					if(botenArray[j*${opponent.bord.bordBreedte}+i]===true){
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard);}
+					
 					
 					startPositionsOfTilesX.push(newX1);
 					startPositionsOfTilesY.push(newY1);
@@ -126,6 +141,13 @@
 		context.fillStyle='red';
 		context.fillRect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
 		context.stroke();
+		}
+		
+		function drawBoatsOther(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard){
+		context1.beginPath();
+		context1.fillStyle='red';
+		context1.fillRect(newX1 ,newY1, tileWidthOtherBoard, tileHeightOtherBoard);
+		context1.stroke();
 		}
 		
 			<!-- Takes care of the onclick event on the board-->
