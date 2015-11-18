@@ -254,7 +254,7 @@ public class ZeeSlagController {
 			}else{
 
 
-				// als niet return naar jsp
+				model.addAttribute("error", "You clicked on a square that already contained a boat, please try again");
 
 			}
 
