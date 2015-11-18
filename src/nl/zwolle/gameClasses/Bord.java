@@ -47,7 +47,8 @@ public class Bord {
 		this.bordBreedte = bordBreedte;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch={FetchType.LAZY})
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
+	//ipv fetch={FetchType.LAZY})
 	//@JoinColumn(name="BORD_ID")
 	public List<Vakje> getVakjeArray() {
 		return vakjeArray;
