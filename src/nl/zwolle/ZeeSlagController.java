@@ -189,7 +189,7 @@ public class ZeeSlagController {
 			session.setAttribute("player1", player);
 		}
 
-		if(player.getBootArray().size() ==1){
+		if(player.getBootArray().size() >=3){
 			return "gameRoom";
 
 		}else{

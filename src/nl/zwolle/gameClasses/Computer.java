@@ -1,12 +1,6 @@
 package nl.zwolle.gameClasses;
 
-import javax.persistence.Entity;
-
-
-
-
 public class Computer extends Speler {
-	
 
 	boolean shotSucceeded = false;
 	int hitCoordinateX = -1;
@@ -25,7 +19,6 @@ public class Computer extends Speler {
 
 	}
 
-	
 	public void computerPlaatstBoten(int hoeveelheidBoten, int maxBordX, int maxBordY) {
 		int x = 0;
 		int y = 0;
@@ -58,11 +51,8 @@ public class Computer extends Speler {
 		}
 	}
 	
-	
 	// overloaded method from Speler
-	public void schietOpVakje(Bord b) {
-
-
+	public void schietOpVakje(Bord b) { //random schot
 
 		//check whether previous shot was a hit and continue to targeted shooting
 		if (hitCoordinateX >= 0){
@@ -108,9 +98,7 @@ public class Computer extends Speler {
 		}
 	}
 
-
-
-	public void targetedShot(Bord b){
+	public void targetedShot(Bord b){//als vorig schot raak was
 
 		if(secondHit == true){
 			continuedTargetedShot(b);
@@ -193,9 +181,7 @@ public class Computer extends Speler {
 		}
 	}
 
-
-	
-	public void continuedTargetedShot(Bord b){
+	public void continuedTargetedShot(Bord b){//vervolg gericht schieten in het verlengde
 		
 		//search further for the boat
 		//determine direction of continued shot
@@ -218,7 +204,6 @@ public class Computer extends Speler {
 
 
 	}
-
 
 	public void shootRightOfX(Bord b){
 		System.out.println("x+1");
@@ -257,8 +242,6 @@ public class Computer extends Speler {
 		}
 
 	}
-
-
 
 	private void shootLeftOfX(Bord b) {
 		System.out.println("x-1");
@@ -332,8 +315,6 @@ public class Computer extends Speler {
 		}
 
 	}
-
-
 
 	private void shootBelowOfY (Bord b) {
 		System.out.println("y-1");
