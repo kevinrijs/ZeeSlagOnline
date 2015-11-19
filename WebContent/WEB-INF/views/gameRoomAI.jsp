@@ -9,7 +9,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
+<link rel="stylesheet" href="http://localhost:8080/ZeeSlagOnline/resources/style.css">
 <title>Game Room</title>
 </head>
 <body>

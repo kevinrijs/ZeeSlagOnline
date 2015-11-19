@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link rel="stylesheet" href="http://localhost:8080/ZeeSlagOnline/resources/style.css">
 <title>ZeeSlag Online</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
 		<td>Player Name:</td><td><input type="text" name="name" value="${name}" required></td>
 		</tr>
 		<tr>
-		<td>Opponent</td><td><input type="radio" name="opponent" value="player">Human<input type="radio" name="opponent" value="computer" checked>Computer</td>
+		<td>Opponent</td><td><input type="radio" name="opponent" value="player" checked>Human<input type="radio" name="opponent" value="computer">Computer</td>
 		</tr>
 		<tr>
 		<td>Board Dimensions: X</td><td><input type="number" name="dimensionX" min="1" max="10" value="10" size="2" required>

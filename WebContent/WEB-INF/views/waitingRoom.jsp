@@ -8,11 +8,13 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <title>Waiting Room</title>
+<link rel="stylesheet" href="http://localhost:8080/ZeeSlagOnline/resources/style.css">
 </head>
 <body>
-<p>
-GAME LOBBY
-</p>
+<h1>
+Game Lobby
+</h1>
+<form:form method="post" action="waitingRoomJoin" >
 <table>
 
 <tr>
@@ -23,7 +25,7 @@ GAME LOBBY
 <td>Number of Boats</td>
 </tr>
 
-<form:form method="post" action="waitingRoomJoin" >
+
 
 <c:forEach items ="${gameList}" var ="speler">
 <tr>
@@ -35,26 +37,31 @@ GAME LOBBY
 </tr>
 
 </c:forEach>
+</table>
+<table>
 <tr>
+<td>
+<input class="button" type="submit" value="Join Game">
+</form:form>
+</td>
 
+<td>
+<form:form method="post" action="waitingRoomHost" >
+<input class="button" id= "host" type="submit" value="Host Game">
+</form:form></td>
 
 </tr>
 
 </table>
 
-<a href ="<c:url value="/" />"	>  <button type="button">Back</button></a>
 
 
-<input type="submit" value="Join Game">
 
 
-</form:form>
 
 
-<form:form method="post" action="waitingRoomHost" >
-<br><input id= "host" type="submit" value="Host Game">
-</form:form>
 
+<a href ="<c:url value="/" />"	><button class="button" type="button">Back</button></a>
 
 
  <script>
