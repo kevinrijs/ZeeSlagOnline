@@ -245,8 +245,8 @@ public class ZeeSlagController {
 
 	@RequestMapping(value="/shoot", method = RequestMethod.POST)
 	public @ResponseBody Speler shootMethod(Model model, HttpSession session, Integer x, Integer y) {
-
-
+		//reset error
+		model.addAttribute("error","");
 		//haal speler sessie op
 		Speler player1 = (Speler)ZeeSlagDOA.find(((Speler) session.getAttribute("player1")).getId()); 
 

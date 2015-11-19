@@ -19,16 +19,18 @@
 
 </head>
 <body>
-<div>
+
+<div><h2>Your Board</h2>
 <canvas id="canvasOwn" width="${player1.bord.bordBreedte*30}}"
 		height="${player1.bord.bordLengte*30}"></canvas>
-		</div><div>
+		</div><div><h2>Opponent's Board</h2>
 <canvas id="canvasOther" width="${player1.bord.bordBreedte*50}}"
 		height="${player1.bord.bordLengte*50}"></canvas>
 		</div>
 
 
 <script>
+$("error");
 		// configureer JQuery om csrf-token mee te sturen
 		var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
 		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -198,13 +200,13 @@
 					function(data){
 					updateUpperField(data);
 					updateLowerField();
-					}, function() {
+					}/*, function() {
       				// Schedule the next request when the current one's complete
      				 window.setTimeout(
      					getGedoe, 2000	 	
     				);
 
-				})
+				}*/);
 			}
 			else{
 			alert('You clicked outside of the field')}
