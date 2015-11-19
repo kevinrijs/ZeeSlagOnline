@@ -43,7 +43,8 @@
 		var startPositionsOfTilesY = [];
 		var tileWidth = 50;
 		var tileHeight = 50;
-		var imageSource = 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
+		var imageSource = "http://localhost:8080/ZeeSlagOnline/resources/watertexture.jpg";
+		
 		
 		var botenArray = [];	
 		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
@@ -109,7 +110,7 @@
 					context.fill();
 									
 					context.lineWith = 1;
-					context.strokeStyle = 'black';
+					context.strokeStyle = 'white';
 
 					context.stroke();
 					
