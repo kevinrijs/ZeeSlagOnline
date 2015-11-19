@@ -101,18 +101,22 @@
 	
 						context1.stroke();
 						
-						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
-							drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);}
 						
-						console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);
+						
+						/*console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);*/
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
 						var color = 'white';
 						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
 						}
+						
+						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
+						var color = 'red';
+							drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
+						}
 					}
-				}
 			}
+		}
+		
 				
 
 			<!-- draws the field with the supplied dimensions-->
@@ -139,13 +143,15 @@
 
 					context.stroke();
 					
-					if(bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
-						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
-					}
+					
 						
 					if(bord.vakjeArray[j*tableColumns+i].beschoten){
 						var color ='white';
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
+					}
+					
+					if(bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
+						var color = 'red';
 						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
 					}
 					
@@ -195,13 +201,13 @@
 		function updateLowerField(){
 			$.get('getComputer',function(data){
 			tegenstander_bord = data.bord;
-			drawFieldUpperBoard(context, tableColumns, tableRows);
+			drawFieldLowerBoard(context1, tableColumns, tableRows);
 			});
 		}
 		
 		function updateUpperField(player1){
 			bord=player1.bord;
-			drawFieldLowerBoard(context1, tableColumns, tableRows);
+			drawFieldUpperBoard(context, tableColumns, tableRows);
 		}
 		
 		canvas1.onclick = onClick;

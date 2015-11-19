@@ -311,20 +311,26 @@ public class ZeeSlagController {
 	}
 
 	@RequestMapping(value="/getComputer", method = RequestMethod.GET)
-	public @ResponseBody Computer getComputer(HttpSession session){
+	public @ResponseBody Speler getComputer(HttpSession session){
 		
 		if (session.getAttribute("player2") != null){
 		Computer ai = (Computer) session.getAttribute("player2");
 		return ai;
 		}
 		Speler player1 = (Speler)session.getAttribute("player1");
-		Computer opponent = (Computer)ZeeSlagDOA.find(player1.getOpponentId());
+		Speler opponent = (Speler)ZeeSlagDOA.find(player1.getOpponentId());
 		return opponent;
 	}
 	
 	@RequestMapping(value="/getPlayer", method = RequestMethod.GET)
 	public @ResponseBody Speler getSpeler(HttpSession session){
 		Speler player = (Speler) session.getAttribute("player1");
+		return player;
+	}
+	
+	@RequestMapping(value="/getOpponent", method = RequestMethod.GET)
+	public @ResponseBody Speler getOpponent(HttpSession session){
+		Speler player = (Speler) session.getAttribute("opponent");
 		return player;
 	}
 
