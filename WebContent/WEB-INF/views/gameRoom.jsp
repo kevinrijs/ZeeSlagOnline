@@ -58,11 +58,7 @@ $("error");
 		var tileWidthOtherBoard = 50;
 		var tileHeightOtherBoard = 50;
 		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
-		
-		var botenArrayOther = [];
-		var beschotenBotenArrayOther=[];
-		var botenArray = [];
-		
+
 		var bord;
 		var tegenstander_bord;
 			
@@ -103,7 +99,7 @@ $("error");
 						
 						
 						
-						/*console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);*/
+						
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
 						var color = 'white';
 						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
@@ -180,15 +176,7 @@ $("error");
 			context1.stroke();
 		}
 		
-		function getGedoe(){
-			console.log("gedoe aangeroepen voor refresh");
-			$.get('getPlayer',
-    				function(data){
-							bord = data.bord;
-							drawFieldLowerBoard(context1, tableColumns, tableRows);
-			});
-			
-		}
+		
 		
 			<!-- Takes care of the onclick event on the board-->
 		function onClick(evt) { 
@@ -203,11 +191,7 @@ $("error");
 					function(data){
 					updateUpperField(data);
 					updateLowerField();
-					}/*, function() {
-      				// Schedule the next request when the current one's complete
-     				 window.setTimeout(getGedoe, 2000);
-
-				}*/);
+					});
 			}
 			else{
 			alert('You clicked outside of the field')}

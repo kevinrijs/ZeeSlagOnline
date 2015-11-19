@@ -57,11 +57,7 @@ $("error");
 		var tileWidthOtherBoard = 50;
 		var tileHeightOtherBoard = 50;
 		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
-		
-		var botenArrayOther = [];
-		var beschotenBotenArrayOther=[];
-		var botenArray = [];
-		
+
 		var bord;
 		var tegenstander_bord;
 			
@@ -101,17 +97,14 @@ $("error");
 						context1.strokeStyle = 'black';
 	
 						context1.stroke();
-						
-						
-						
-						/*console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);*/
+
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
 						var color = 'white';
 						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
 						}
 						
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
+						var color = '#BF0000';
 							drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
 						}
 					}
@@ -144,7 +137,10 @@ $("error");
 
 					context.stroke();
 					
-					
+					if(bord.vakjeArray[j*tableColumns+i].bevatBoot){
+						var color = 'grey';
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
+					}
 						
 					if(bord.vakjeArray[j*tableColumns+i].beschoten){
 						var color ='white';
@@ -152,7 +148,7 @@ $("error");
 					}
 					
 					if(bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
+						var color = '#BF0000';
 						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
 					}
 					
@@ -192,20 +188,16 @@ $("error");
 					updateUpperField(data);
 					updateLowerField();
 					});
-
 			}
 			else{
 			alert('You clicked outside of the field')}
-
 		}
-		
 		function updateLowerField(){
 			$.get('getComputer',function(data){
 			tegenstander_bord = data.bord;
 			drawFieldLowerBoard(context1, tableColumns, tableRows);
 			});
 		}
-		
 		function updateUpperField(player1){
 			bord=player1.bord;
 			drawFieldUpperBoard(context, tableColumns, tableRows);
