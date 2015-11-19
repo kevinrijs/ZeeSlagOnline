@@ -43,6 +43,7 @@
 		var startPositionsOfTilesY = [];
 		var tileWidth = 50;
 		var tileHeight = 50;
+		var imageSource = 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
 		
 		var botenArray = [];	
 		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
@@ -86,11 +87,7 @@
 			};
 		}
 
-		canvas.addEventListener('mousemove', function(evt) {
-			var mousePos = getMousePos(canvas, evt);
-			var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-
-		}, false);
+		
 
 		
 						
@@ -106,7 +103,7 @@
 					context.rect(newX ,newY, tileWidth, tileHeight);
 					
 					var imageObj = new Image();
-					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					imageObj.src = imageSource;
 					var pattern = context.createPattern(imageObj, 'repeat');
 					context.fillStyle = pattern;
 					context.fill();
