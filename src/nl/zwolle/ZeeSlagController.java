@@ -178,33 +178,42 @@ public class ZeeSlagController {
 
 		player.nieuweBoot(x, y, orientation, boatType);
 
+		
+		
 		if (session.getAttribute("player2") == null){ // player2=computer
 
+			//als geen computer
 			session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
-
-
-
 
 		}else{
-			((Computer)session.getAttribute("player2")).computerPlaatstBoten(1, player.getBord().getBordBreedte(), player.getBord().getBordLengte());
+			//als wel computer
 			session.setAttribute("player1", player);
 		}
+		
 
+		//alle boten geplaats?
 		if(player.getBootArray().size() >=3){
 
+			//ja, zet deze speler op ready
 			player.setReadyToPlay(true);
-			session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
+			
 
 
 			//als er multiplayer gespeeld wordt
 			if (session.getAttribute("player2") == null){
 
+				//als multiplayer
+				session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player));
 
 				//todo while loop totdat speler zijn boten heeft geplaatst.
 				while(!ZeeSlagDOA.find(player.getOpponentId()).isReadyToPlay()){
 
 
-					//wait
+					try {
+					    Thread.sleep(3500);                 //1000 milliseconds is one second.
+					} catch(InterruptedException ex) {
+					    Thread.currentThread().interrupt();
+					}
 
 
 				}
@@ -212,6 +221,12 @@ public class ZeeSlagController {
 				return "gameRoom";
 
 			}else{
+				
+				// als geen multiplayer
+				session.setAttribute("player1", player);
+				Computer computer = (Computer)session.getAttribute("player2");
+				computer.computerPlaatstBoten(3, player.getBord().getBordBreedte(), player.getBord().getBordLengte());
+				session.setAttribute("player2", computer);
 				return "gameRoomAI";
 			}
 
