@@ -101,7 +101,7 @@ public class Speler {
 	
 	
 	//getters setters
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
 	//@JoinColumn(name="SPELER_ID")
 	public List<Boot> getBootArray() {
 		return bootArray;
