@@ -310,6 +310,10 @@ public class ZeeSlagController {
 
 	}
 
-
+	@RequestMapping(value="/getComputer", method = RequestMethod.GET)
+	public @ResponseBody Computer getComputer(HttpSession session){
+		Computer ai = (Computer) session.getAttribute("player2");
+		return ai;
+	}
 
 }

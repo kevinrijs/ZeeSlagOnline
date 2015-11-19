@@ -52,25 +52,42 @@
 		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
 		
 		var botenArrayOther = [];
+		var beschotenBotenArrayOther=[];
+		var botenArray = [];
+		
+			
+		fillAllArrays();
+		
+		function fillAllArrays(){
+		
+		botenArrayOther.length =0;
+		beschotenBotenArrayOther.length=0;
+		botenArray.length = 0;
+		
 		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
 				botenArrayOther.push(${vakje.bevatBoot});
 		</c:forEach>
 		
 		
-		var botenArray = [];	
-		
-		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
-				botenArray.push(${vakje.bevatBoot});
+		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
+				beschotenBotenArrayOther.push(${vakje.beschoten});
 		</c:forEach>
 		
 		
 		
 		
+		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
+				botenArray.push(${vakje.bevatBoot});
+		</c:forEach>
+		}
 		
-		drawFieldOwnBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
-		drawFieldOtherBoard(context1,tableColumns,tableRows);
 		
-		function drawFieldOtherBoard(context1, tableColumns, tableRows){
+		
+		
+		drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
+		drawFieldLowerBoard(context1,tableColumns,tableRows);
+		
+		function drawFieldLowerBoard(context1, tableColumns, tableRows){
 		
 		
 		for (var i = 0; i < tableColumns; i++) {
@@ -85,24 +102,35 @@
 					var pattern = context.createPattern(imageObj, 'repeat');
 					context1.fillStyle = pattern;
 					context1.fill();
-									
-									if(botenArrayOther[j*${player1.bord.bordBreedte}+i]===true){
-						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);}
-					}
-					
 					context1.lineWith = 1;
 					context1.strokeStyle = 'black';
 
 					context1.stroke();
 					
+					if(botenArrayOther[j*${player1.bord.bordBreedte}+i] && beschotenBotenArrayOther[j*${player1.bord.bordBreedte}+i]){
+						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);}
+					}
+					if(beschotenBotenArrayOther[j*${player1.bord.bordBreedte}+i]){
+					drawShotBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);
+					}
+					
+					
+					
 				}}
+				
+				function drawShotBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard){
+				context1.beginPath();
+		context1.fillStyle='white';
+		context1.fillRect(newX1 ,newY1, tileWidthOtherBoard, tileHeightOtherBoard);
+		context1.stroke();
+				}
 		
 		
 		
 		
 
 			<!-- draws the field with the supplied dimensions-->
-		function drawFieldOwnBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+		function drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
 			
 
 			for (var i = 0; i < tableColumns; i++) {
@@ -125,7 +153,7 @@
 
 					context.stroke();
 					
-					if(botenArray[j*${opponent.bord.bordBreedte}+i]===true){
+					if(botenArray[j*${player1.bord.bordBreedte}+i]===true){
 						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard);}
 					
 					
@@ -160,8 +188,8 @@
 			if(x<tableColumns&&y<tableRows){
 			
 			$.post('shoot', {x:x, y:y}, 
-				function(data){	drawFieldOwnBoard();
-							drawFieldOtherBoard();}
+				function(data){ updateUpperField(data);
+				updateLowerField();}
 					);
 			
 			
@@ -170,6 +198,35 @@
 			alert('You clicked outside of the field')}
 
 		}
+		
+		function updateLowerField(){
+		$.get('getComputer',function(data){updateLowerField(data)});
+		}
+		
+		function updateUpperField(player1){
+		var vakjesArray = [];
+		vakjesArray =$(player1.vakjeArray);
+		
+		
+		for (var i = 0; i < tableColumns; i++) {
+				for (var j = 0; j < tableRows; j++) {
+					
+					var newX1 =(j * tileWidthOwnBoard);
+					var newY1=( i * tileHeightOwnBoard);
+					
+					if(vakjesArray[i*tableColumns+j]){
+					context.beginPath();
+					context.rect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
+					
+					context.fillStyle = 'white';
+					context.fill();
+					
+					context.stroke();
+					}
+					
+		
+		
+		}}}
 		
 		canvas1.onclick = onClick;
 
