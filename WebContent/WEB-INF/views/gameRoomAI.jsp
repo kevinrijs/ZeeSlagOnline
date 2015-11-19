@@ -104,7 +104,7 @@ $("error");
 						
 						
 						
-						/*console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);*/
+						
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
 						var color = 'white';
 						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
