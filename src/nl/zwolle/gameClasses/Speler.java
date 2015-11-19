@@ -33,6 +33,17 @@ public class Speler {
 	protected boolean  host = false;
 	protected boolean  coupled = false;
 	protected boolean  hisTurn = false;
+	protected boolean  readyToPlay = false;
+	
+	
+	public boolean isReadyToPlay() {
+		return readyToPlay;
+	}
+
+	public void setReadyToPlay(boolean readyToPlay) {
+		this.readyToPlay = readyToPlay;
+	}
+
 	protected int opponentId = -1;
 	
 
