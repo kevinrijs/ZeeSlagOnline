@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <title>Place boats</title>
-
+ <link rel="stylesheet" href="http://localhost:8080/ZeeSlagOnline/resources/style.css">
 </head>
 <body>
 	<h1>Battleship Online</h1>
