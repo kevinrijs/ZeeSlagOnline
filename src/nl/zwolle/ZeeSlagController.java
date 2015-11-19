@@ -212,7 +212,7 @@ public class ZeeSlagController {
 				return "gameRoom";
 
 			}else{
-				return "gameRoom2";
+				return "gameRoomAI";
 			}
 
 

@@ -23,25 +23,16 @@
 	<input type="radio" name="orientation" value="true">Horizontal (right)
 	<h4>Select Boat</h4>
 
-
-	
-	
 	<input class ="boat" id="aircraftcarrier" type="radio" name="boatType" value = "0" >Aircraft Carrier
 	<input class ="boat" id="battleship" type="radio" name="boatType" value = "1">Battleship
 	<input class ="boat" id="submarine" type="radio" name="boatType" value = "2">Submarine
 	<input class ="boat" id="cruiser" type="radio" name="boatType" value = "3">Cruiser
 	<input class ="boat" id="patrolboat" type="radio" name="boatType" value = "4" checked>Patrol boat
 	
-	
-	
 	</form:form>
 	<canvas id="myCanvas" width="${player1.bord.bordBreedte*1000}}"
 		height="${player1.bord.bordLengte*1000}"></canvas>
 		
-
-
-
-
 	<script>
 		var tableColumns = ${player1.bord.bordBreedte};
 		var tableRows = ${player1.bord.bordLengte};
@@ -52,11 +43,13 @@
 		var startPositionsOfTilesY = [];
 		var tileWidth = 50;
 		var tileHeight = 50;
+		var imageSource = 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
 		
 		var botenArray = [];	
 		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
 				botenArray.push(${vakje.bevatBoot});
 		</c:forEach> 
+		
 		
 		<c:forEach var="boot" items ="${player1.bootArray}">
 		$('#${boot.naam}').hide();
@@ -94,29 +87,23 @@
 			};
 		}
 
-		canvas.addEventListener('mousemove', function(evt) {
-			var mousePos = getMousePos(canvas, evt);
-			var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-
-		}, false);
+		
 
 		
 						
 		<!-- draws the field with the supplied dimensions-->
 		function drawField(context, tableColums, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
-			
-
 			for (var i = 0; i < tableColumns; i++) {
 				for (var j = 0; j < tableRows; j++) {
 					
 					 newX =(j * tileWidth);
 					 newY=( i * tileHeight);
-					
-					
+					 
 					context.beginPath();
 					context.rect(newX ,newY, tileWidth, tileHeight);
+					
 					var imageObj = new Image();
-					imageObj.src ='http://mirror2.cze.cz/textures/water-texture-3.jpg';
+					imageObj.src = imageSource;
 					var pattern = context.createPattern(imageObj, 'repeat');
 					context.fillStyle = pattern;
 					context.fill();
@@ -132,7 +119,6 @@
 					
 					startPositionsOfTilesX.push(newX);
 					startPositionsOfTilesY.push(newY);
-					
 				}
 			}
 		

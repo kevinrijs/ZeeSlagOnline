@@ -52,7 +52,7 @@
 		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
 		
 		var botenArrayOther = [];
-		<c:forEach var="vakje" items="${opponent.bord.vakjeArray}"> 
+		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
 				botenArrayOther.push(${vakje.bevatBoot});
 		</c:forEach>
 		
