@@ -49,7 +49,7 @@
 		var tileHeightOwnBoard = 30;
 		var tileWidthOtherBoard = 50;
 		var tileHeightOtherBoard = 50;
-		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
+		var backgroundSource= "http://localhost:8080/ZeeSlagOnline/resources/watertexture.jpg";
 		
 		var botenArrayOther = [];
 		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
@@ -91,7 +91,7 @@
 					}
 					
 					context1.lineWith = 1;
-					context1.strokeStyle = 'black';
+					context1.strokeStyle = 'white';
 
 					context1.stroke();
 					
