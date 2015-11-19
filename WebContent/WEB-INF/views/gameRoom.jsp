@@ -141,7 +141,10 @@
 
 					context.stroke();
 					
-					
+					if(bord.vakjeArray[j*tableColumns+i].bevatBoot){
+						var color = 'grey';
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
+					}
 						
 					if(bord.vakjeArray[j*tableColumns+i].beschoten){
 						var color ='white';
@@ -149,7 +152,7 @@
 					}
 					
 					if(bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
+						var color = '#BF0000';
 						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
 					}
 					
@@ -200,9 +203,7 @@
 					updateLowerField();
 					}, function() {
       				// Schedule the next request when the current one's complete
-     				 window.setTimeout(
-     					getGedoe, 2000	 	
-    				);
+     				 window.setTimeout(getGedoe, 2000);
 
 				})
 			}
