@@ -9,8 +9,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 
-<title>Game Room</title>
+<title>Game Room!</title>
 </head>
 <body>
 <div>
@@ -49,88 +50,68 @@
 		var tileHeightOwnBoard = 30;
 		var tileWidthOtherBoard = 50;
 		var tileHeightOtherBoard = 50;
-		var backgroundSource= "http://localhost:8080/ZeeSlagOnline/resources/watertexture.jpg";
+		var backgroundSource= 'http://mirror2.cze.cz/textures/water-texture-3.jpg';
 		
 		var botenArrayOther = [];
 		var beschotenBotenArrayOther=[];
 		var botenArray = [];
 		
+		var bord;
+		var tegenstander_bord;
 			
-		fillAllArrays();
 		
-		function fillAllArrays(){
-		
-		botenArrayOther.length =0;
-		beschotenBotenArrayOther.length=0;
-		botenArray.length = 0;
-		
-		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
-				botenArrayOther.push(${vakje.bevatBoot});
-		</c:forEach>
-		
-		
-		<c:forEach var="vakje" items="${player2.bord.vakjeArray}"> 
-				beschotenBotenArrayOther.push(${vakje.beschoten});
-		</c:forEach>
-		
-		
-		
-		
-		<c:forEach var="vakje" items="${player1.bord.vakjeArray}"> 
-				botenArray.push(${vakje.bevatBoot});
-		</c:forEach>
-		}
-		
-		
-		
-		
-		drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
-		drawFieldLowerBoard(context1,tableColumns,tableRows);
-		
+		$(document).ready(function(){
+			$.get("getComputer", function(data){
+				console.log('getComputer returns: ', data);
+				tegenstander_bord = data.bord;
+				drawFieldLowerBoard(context1,tableColumns,tableRows);
+			});
+			$.get('getPlayer',function(data){
+				console.log('getPlayer returns: ', data);
+				bord = data.bord;
+				drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
+			});
+			
+			
+			
+		});
+	
 		function drawFieldLowerBoard(context1, tableColumns, tableRows){
 		
-		
-		for (var i = 0; i < tableColumns; i++) {
-				for (var j = 0; j < tableRows; j++) {
-					var newX =(j * tileWidthOtherBoard);
-					var newY=( i * tileHeightOtherBoard);
-					
-					context1.beginPath();
-					context1.rect(newX ,newY, tileWidthOtherBoard, tileHeightOtherBoard);
-					var imageObj = new Image();
-					imageObj.src =backgroundSource;
-					var pattern = context.createPattern(imageObj, 'repeat');
-					context1.fillStyle = pattern;
-					context1.fill();
-					context1.lineWith = 1;
-					context1.strokeStyle = 'white';
-
-					context1.stroke();
-					
-					if(botenArrayOther[j*${player1.bord.bordBreedte}+i] && beschotenBotenArrayOther[j*${player1.bord.bordBreedte}+i]){
-						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);}
+			
+			for (var i = 0; i < tableColumns; i++) {
+					for (var j = 0; j < tableRows; j++) {
+						var newX =(j * tileWidthOtherBoard);
+						var newY=( i * tileHeightOtherBoard);
+						
+						context1.beginPath();
+						context1.rect(newX ,newY, tileWidthOtherBoard, tileHeightOtherBoard);
+						var imageObj = new Image();
+						imageObj.src =backgroundSource;
+						var pattern = context.createPattern(imageObj, 'repeat');
+						context1.fillStyle = pattern;
+						context1.fill();
+						context1.lineWith = 1;
+						context1.strokeStyle = 'black';
+	
+						context1.stroke();
+						
+						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
+						var color = 'red';
+							drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);}
+						
+						console.log(i, j, j*${player1.bord.bordBreedte}+i, tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i]);
+						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
+						var color = 'white';
+						drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
+						}
 					}
-					if(beschotenBotenArrayOther[j*${player1.bord.bordBreedte}+i]){
-					drawShotBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard);
-					}
-					
-					
-					
-				}}
-				
-				function drawShotBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard){
-				context1.beginPath();
-		context1.fillStyle='white';
-		context1.fillRect(newX1 ,newY1, tileWidthOtherBoard, tileHeightOtherBoard);
-		context1.stroke();
 				}
-		
-		
-		
-		
+			}
+				
 
 			<!-- draws the field with the supplied dimensions-->
-		function drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY) {
+		function drawFieldUpperBoard(context, tableColumns, tableRows) {
 			
 
 			for (var i = 0; i < tableColumns; i++) {
@@ -153,29 +134,36 @@
 
 					context.stroke();
 					
-					if(botenArray[j*${player1.bord.bordBreedte}+i]===true){
-						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard);}
+					if(bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
+						var color = 'red';
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
+					}
+						
+					if(bord.vakjeArray[j*tableColumns+i].beschoten){
+						var color ='white';
+						drawBoats(newX1,newY1,tileWidthOtherBoard,tileHeightOtherBoard,color);
+					}
 					
 					
-					startPositionsOfTilesX.push(newX1);
-					startPositionsOfTilesY.push(newY1);
+					
 					
 				}
-			}}
+			}
+		}
 			
 				<!-- fills the tiles where boats are located-->
-		function drawBoats(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard){
-		context.beginPath();
-		context.fillStyle='red';
-		context.fillRect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
-		context.stroke();
+		function drawBoats(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard,color){
+			context.beginPath();
+			context.fillStyle=color;
+			context.fillRect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
+			context.stroke();
 		}
 		
-		function drawBoatsOther(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard){
-		context1.beginPath();
-		context1.fillStyle='red';
-		context1.fillRect(newX1 ,newY1, tileWidthOtherBoard, tileHeightOtherBoard);
-		context1.stroke();
+		function drawBoatsOther(newX1,newY1,tilewidthOwnBoard,tileHeightOwnBoard,color){
+			context1.beginPath();
+			context1.fillStyle=color;
+			context1.fillRect(newX1 ,newY1, tileWidthOtherBoard, tileHeightOtherBoard);
+			context1.stroke();
 		}
 		
 			<!-- Takes care of the onclick event on the board-->
@@ -187,12 +175,12 @@
 			
 			if(x<tableColumns&&y<tableRows){
 			
-			$.post('shoot', {x:x, y:y}, 
-				function(data){ updateUpperField(data);
-				updateLowerField();}
-					);
-			
-			
+				$.post('shoot', {x:x, y:y}, 
+					function(data){
+					updateUpperField(data);
+					updateLowerField();
+					});
+
 			}
 			else{
 			alert('You clicked outside of the field')}
@@ -200,33 +188,16 @@
 		}
 		
 		function updateLowerField(){
-		$.get('getComputer',function(data){updateLowerField(data)});
+			$.get('getComputer',function(data){
+			tegenstander_bord = data.bord;
+			drawFieldUpperBoard(context, tableColumns, tableRows);
+			});
 		}
 		
 		function updateUpperField(player1){
-		var vakjesArray = [];
-		vakjesArray =$(player1.vakjeArray);
-		
-		
-		for (var i = 0; i < tableColumns; i++) {
-				for (var j = 0; j < tableRows; j++) {
-					
-					var newX1 =(j * tileWidthOwnBoard);
-					var newY1=( i * tileHeightOwnBoard);
-					
-					if(vakjesArray[i*tableColumns+j]){
-					context.beginPath();
-					context.rect(newX1 ,newY1, tileWidthOwnBoard, tileHeightOwnBoard);
-					
-					context.fillStyle = 'white';
-					context.fill();
-					
-					context.stroke();
-					}
-					
-		
-		
-		}}}
+			bord=player1.bord;
+			drawFieldLowerBoard(context1, tableColumns, tableRows);
+		}
 		
 		canvas1.onclick = onClick;
 

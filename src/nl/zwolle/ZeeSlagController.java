@@ -315,5 +315,11 @@ public class ZeeSlagController {
 		Computer ai = (Computer) session.getAttribute("player2");
 		return ai;
 	}
+	
+	@RequestMapping(value="/getPlayer", method = RequestMethod.GET)
+	public @ResponseBody Speler getSpeler(HttpSession session){
+		Speler player = (Speler) session.getAttribute("player1");
+		return player;
+	}
 
 }
