@@ -11,7 +11,7 @@
 </head>
 <body>
 <p>
-Waiting for a Human opponent to kick your ass...
+GAME LOBBY
 </p>
 <table>
 
@@ -52,7 +52,7 @@ Waiting for a Human opponent to kick your ass...
 
 
 <form:form method="post" action="waitingRoomHost" >
-<input id= "host" type="submit" value="Host Game">
+<br><input id= "host" type="submit" value="Host Game">
 </form:form>
 
 

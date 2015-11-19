@@ -10,6 +10,7 @@
 <title>ZeeSlag Online</title>
 </head>
 <body>
+<h1>Welcome to ZeeSlag Online</h1>
 <form:form method="post" action="startGame" >
 		
 		<table>

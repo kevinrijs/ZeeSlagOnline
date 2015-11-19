@@ -312,8 +312,14 @@ public class ZeeSlagController {
 
 	@RequestMapping(value="/getComputer", method = RequestMethod.GET)
 	public @ResponseBody Computer getComputer(HttpSession session){
+		
+		if (session.getAttribute("player2") != null){
 		Computer ai = (Computer) session.getAttribute("player2");
 		return ai;
+		}
+		Speler player1 = (Speler)session.getAttribute("player1");
+		Computer opponent = (Computer)ZeeSlagDOA.find(player1.getOpponentId());
+		return opponent;
 	}
 
 }
