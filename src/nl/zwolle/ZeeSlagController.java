@@ -178,8 +178,8 @@ public class ZeeSlagController {
 
 		player.nieuweBoot(x, y, orientation, boatType);
 
-		
-		
+
+
 		if (session.getAttribute("player2") == null){ // player2=computer
 
 			//als geen computer
@@ -189,14 +189,14 @@ public class ZeeSlagController {
 			//als wel computer
 			session.setAttribute("player1", player);
 		}
-		
+
 
 		//alle boten geplaats?
 		if(player.getBootArray().size() >=3){
 
 			//ja, zet deze speler op ready
 			player.setReadyToPlay(true);
-			
+
 
 
 			//als er multiplayer gespeeld wordt
@@ -210,9 +210,9 @@ public class ZeeSlagController {
 
 
 					try {
-					    Thread.sleep(3500);                 //1000 milliseconds is one second.
+						Thread.sleep(3500);                 //1000 milliseconds is one second.
 					} catch(InterruptedException ex) {
-					    Thread.currentThread().interrupt();
+						Thread.currentThread().interrupt();
 					}
 
 
@@ -221,7 +221,7 @@ public class ZeeSlagController {
 				return "gameRoom";
 
 			}else{
-				
+
 				// als geen multiplayer
 				session.setAttribute("player1", player);
 				Computer computer = (Computer)session.getAttribute("player2");
@@ -232,7 +232,7 @@ public class ZeeSlagController {
 
 
 
-			
+
 
 		}else{
 
@@ -248,7 +248,7 @@ public class ZeeSlagController {
 
 
 		//haal speler sessie op
-		Speler player1 = (Speler) session.getAttribute("player1");
+		Speler player1 = (Speler)ZeeSlagDOA.find(((Speler) session.getAttribute("player1")).getId()); 
 
 		// als computer is tegenstander
 		if (session.getAttribute("player2") != null){
@@ -281,24 +281,32 @@ public class ZeeSlagController {
 
 			// schietopvakje bord tegenstander en kijk of het gelukt is, check coordinaten
 
-			if(player1.schietOpVakje(opponent.getBord(), x, y)){
+			if(player1.isHisTurn()){
 
-				// als wel , geef beurt aan opponent, geen beurt voor deze speler meer, kijk of opponent heeft verloren, 
-				// pas opponent en huidige speler  aan in de session en database
+				if(player1.schietOpVakje(opponent.getBord(), x, y)){
 
-				opponent.setHisTurn(true);
-				player1.setHisTurn(false);
-				//TODO zet dit als voorwaarde in javascript opponent.spelerHeeftVerloren();
-				session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player1));
-				ZeeSlagDOA.updateSpeler(opponent);
-				//return true als gelukt is
+					// als wel , geef beurt aan opponent, geen beurt voor deze speler meer, kijk of opponent heeft verloren, 
+					// pas opponent en huidige speler  aan in de session en database
+
+					opponent.setHisTurn(true);
+					player1.setHisTurn(false);
+					//TODO zet dit als voorwaarde in javascript opponent.spelerHeeftVerloren();
+					
+					//return true als gelukt is
+
+				}else{
+
+
+					model.addAttribute("error", "You clicked on a square that already contained a boat, please try again");
+
+				}
 
 			}else{
-
-
-				model.addAttribute("error", "You clicked on a square that already contained a boat, please try again");
-
+				model.addAttribute("error","Not Your turn");
 			}
+			
+			session.setAttribute("player1",ZeeSlagDOA.updateSpeler(player1));
+			ZeeSlagDOA.updateSpeler(opponent);
 
 		}
 
@@ -310,28 +318,37 @@ public class ZeeSlagController {
 
 	}
 
-	@RequestMapping(value="/getComputer", method = RequestMethod.GET)
+	@RequestMapping(value="/getComputer", method = RequestMethod.GET) // haalt ook opponent op
 	public @ResponseBody Speler getComputer(HttpSession session){
-		
+
 		if (session.getAttribute("player2") != null){
-		Computer ai = (Computer) session.getAttribute("player2");
-		return ai;
+			Computer ai = (Computer) session.getAttribute("player2");
+			return ai;
 		}
 		Speler player1 = (Speler)session.getAttribute("player1");
 		Speler opponent = (Speler)ZeeSlagDOA.find(player1.getOpponentId());
 		return opponent;
 	}
-	
+
 	@RequestMapping(value="/getPlayer", method = RequestMethod.GET)
 	public @ResponseBody Speler getSpeler(HttpSession session){
-		Speler player = (Speler) session.getAttribute("player1");
+
+		//als tegen de computer
+		if (session.getAttribute("player2") != null){		
+			Speler player = (Speler) session.getAttribute("player1");
+			return player;
+		}
+		// anders als tegen opponent
+
+		Speler player = (Speler)ZeeSlagDOA.find(((Speler) session.getAttribute("player1")).getId()); 
 		return player;
+
 	}
-	
-	@RequestMapping(value="/getOpponent", method = RequestMethod.GET)
-	public @ResponseBody Speler getOpponent(HttpSession session){
-		Speler player = (Speler) session.getAttribute("opponent");
-		return player;
-	}
+
+	//	@RequestMapping(value="/getOpponent", method = RequestMethod.GET)
+	//	public @ResponseBody Speler getOpponent(HttpSession session){
+	//		Speler player = (Speler) session.getAttribute("opponent");
+	//		return player;
+	//	}
 
 }
