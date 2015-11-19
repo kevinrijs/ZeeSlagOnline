@@ -81,6 +81,9 @@ $("error");
 	
 		});
 	
+		
+		
+		
 		function drawFieldLowerBoard(context1, tableColumns, tableRows){
 		
 			
