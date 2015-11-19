@@ -74,11 +74,9 @@
 			$.get('getPlayer',function(data){
 				console.log('getPlayer returns: ', data);
 				bord = data.bord;
-				drawFieldUpperBoard(context, tableColumns, tableRows,startPositionsOfTilesX,startPositionsOfTilesY);
+				drawFieldUpperBoard(context, tableColumns, tableRows);
 			});
-			
-			
-			
+	
 		});
 	
 		function drawFieldLowerBoard(context1, tableColumns, tableRows){
@@ -97,7 +95,7 @@
 						context1.fillStyle = pattern;
 						context1.fill();
 						context1.lineWith = 1;
-						context1.strokeStyle = 'black';
+						context1.strokeStyle = 'white';
 	
 						context1.stroke();
 						
@@ -110,7 +108,7 @@
 						}
 						
 						if(tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].bevatBoot && tegenstander_bord.vakjeArray[j*${player1.bord.bordBreedte}+i].beschoten){
-						var color = 'red';
+						var color = '#BF0000';
 							drawBoatsOther(newX,newY,tileWidthOwnBoard,tileHeightOwnBoard,color);
 						}
 					}
@@ -139,7 +137,7 @@
 					context.fill();
 									
 					context.lineWith = 1;
-					context.strokeStyle = 'black';
+					context.strokeStyle = 'white';
 
 					context.stroke();
 					
@@ -177,6 +175,16 @@
 			context1.stroke();
 		}
 		
+		function getGedoe(){
+			console.log("gedoe aangeroepen voor refresh");
+			$.get('getPlayer',
+    				function(data){
+							bord = data.bord;
+							drawFieldLowerBoard(context1, tableColumns, tableRows);
+			});
+			
+		}
+		
 			<!-- Takes care of the onclick event on the board-->
 		function onClick(evt) { 
 			var mousePosition = getMousePos(canvas1, evt);
@@ -190,13 +198,19 @@
 					function(data){
 					updateUpperField(data);
 					updateLowerField();
-					});
+					}, function() {
+      				// Schedule the next request when the current one's complete
+     				 window.setTimeout(
+     					getGedoe, 2000	 	
+    				);
 
+				})
 			}
 			else{
 			alert('You clicked outside of the field')}
 
 		}
+		
 		
 		function updateLowerField(){
 			$.get('getComputer',function(data){
