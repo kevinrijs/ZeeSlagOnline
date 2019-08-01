@@ -16,5 +16,10 @@ pipeline {
         }
       }
     }
+    stage('other') {
+      steps {
+        writeFile(file: 'hi', text: 'hi')
+      }
+    }
   }
 }
